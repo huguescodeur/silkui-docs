@@ -1,6 +1,6 @@
 # SilkUI Docs
 
-Documentation site for [SilkUI](https://github.com/huguescodeur/nexui) — a shadcn/ui-inspired component library for Django.
+Documentation site for [SilkUI](https://github.com/huguescodeur/silkui) — a shadcn/ui-inspired component library for Django.
 
 ## Run locally
 
