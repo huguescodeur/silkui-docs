@@ -1,4 +1,4 @@
 Django==6.1.1
 gunicorn
 whitenoise
-git+https://github.com/huguescodeur/silkui.git
+silkui==1.1.0
