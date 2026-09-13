@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load silkui_tags %}
+
+{% block title %}Tabs — SilkUI{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-8 py-12 space-y-12">
+
+  <div class="space-y-2">
+    <p class="text-sm text-muted-foreground">Navigation</p>
+    <h1 class="text-3xl font-bold tracking-tight">Tabs</h1>
+    <p class="text-muted-foreground">Switch between panels of related content.</p>
+  </div>
+
+  <section class="space-y-3">
+    <h2 class="text-lg font-semibold">Installation</h2>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText('silkui add tabs'); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-bash">silkui add tabs</code></pre>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-lg font-semibold">Example</h2>
+    <div class="rounded-lg border p-6 bg-card">
+      {% tabs active="overview" %}
+        {% tab id="overview" label="Overview" %}
+          <p class="text-sm text-muted-foreground">Make changes to your account here.</p>
+        {% endtab %}
+        {% tab id="analytics" label="Analytics" %}
+          <p class="text-sm text-muted-foreground">View your analytics dashboard here.</p>
+        {% endtab %}
+        {% tab id="settings" label="Settings" %}
+          <p class="text-sm text-muted-foreground">Manage your settings here.</p>
+        {% endtab %}
+      {% endtabs %}
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% tabs active="overview" %}
+  {% tab id="overview" label="Overview" %}
+    <p>Overview content</p>
+  {% endtab %}
+  {% tab id="analytics" label="Analytics" %}
+    <p>Analytics content</p>
+  {% endtab %}
+  {% tab id="settings" label="Settings" %}
+    <p>Settings content</p>
+  {% endtab %}
+{% endtabs %}{% endverbatim %}</code></pre>
+    </div>
+  </section>
+
+  <section class="space-y-6">
+    <h2 class="text-lg font-semibold">Props</h2>
+
+    <div class="space-y-2">
+      <p class="text-sm font-medium text-muted-foreground">Container — <code class="bg-muted px-1 rounded text-xs">tabs</code></p>
+      <div class="rounded-lg border overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="border-b bg-muted/50">
+            <tr>
+              <th class="text-left px-4 py-3 font-medium">Prop</th>
+              <th class="text-left px-4 py-3 font-medium">Type</th>
+              <th class="text-left px-4 py-3 font-medium">Description</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y">
+            <tr><td class="px-4 py-3 font-mono text-xs">active</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3 text-muted-foreground">ID of the tab to show by default</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <p class="text-sm font-medium text-muted-foreground">Each tab — <code class="bg-muted px-1 rounded text-xs">tab</code></p>
+      <div class="rounded-lg border overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="border-b bg-muted/50">
+            <tr>
+              <th class="text-left px-4 py-3 font-medium">Prop</th>
+              <th class="text-left px-4 py-3 font-medium">Type</th>
+              <th class="text-left px-4 py-3 font-medium">Description</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y">
+            <tr><td class="px-4 py-3 font-mono text-xs">id</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3 text-muted-foreground">Unique tab identifier</td></tr>
+            <tr><td class="px-4 py-3 font-mono text-xs">label</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3 text-muted-foreground">Text displayed on the tab trigger</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="flex justify-between pt-4 border-t text-sm">
+    <a href="/docs/separator/" class="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> Separator
+    </a>
+    <a href="/docs/dropdown/" class="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+      Dropdown <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  </div>
+
+</div>
+{% endblock %}

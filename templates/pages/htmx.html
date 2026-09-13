@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+{% load silkui_tags %}
+
+{% block title %}HTMX Integration — SilkUI{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-8 py-12 space-y-16">
+
+  <div class="space-y-3">
+    <h1 class="text-3xl font-bold tracking-tight">HTMX Integration</h1>
+    <p class="text-muted-foreground">SilkUI components accept any <code class="bg-muted px-1 rounded text-sm">hx_*</code> prop, which is automatically converted to an <code class="bg-muted px-1 rounded text-sm">hx-*</code> HTML attribute.</p>
+    <div class="rounded-lg border bg-muted/30 p-4 text-sm text-muted-foreground">
+      <strong class="text-foreground">How it works:</strong> write <code class="bg-muted px-1 rounded">hx_post="/url/"</code> → SilkUI outputs <code class="bg-muted px-1 rounded">hx-post="/url/"</code>. Same for all HTMX attributes: <code class="bg-muted px-1 rounded">hx_get</code>, <code class="bg-muted px-1 rounded">hx_target</code>, <code class="bg-muted px-1 rounded">hx_swap</code>, <code class="bg-muted px-1 rounded">hx_trigger</code>, etc.
+    </div>
+  </div>
+
+  <!-- HTMX setup -->
+  <section class="space-y-4" id="setup">
+    <h2 class="text-xl font-semibold">Setup</h2>
+    <p class="text-sm text-muted-foreground">Add HTMX to your base template:</p>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-html">&lt;script src="https://unpkg.com/htmx.org@2.0.0"&gt;&lt;/script&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- Submit button -->
+  <section class="space-y-4" id="button">
+    <h2 class="text-xl font-semibold">Button — POST request</h2>
+    <p class="text-sm text-muted-foreground">A button that sends a POST and swaps a target element with the response.</p>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% button hx_post="/tasks/42/complete/" hx_target="#task-42" hx_swap="outerHTML" %}
+  Mark as done
+{% endbutton %}{% endverbatim %}</code></pre>
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-python"># views.py
+def complete_task(request, task_id):
+    task = Task.objects.get(pk=task_id)
+    task.done = True
+    task.save()
+    return render(request, "partials/task_row.html", {"task": task})</code></pre>
+    </div>
+  </section>
+
+  <!-- Live search -->
+  <section class="space-y-4" id="live-search">
+    <h2 class="text-xl font-semibold">Live Search Input</h2>
+    <p class="text-sm text-muted-foreground">Input that triggers a GET on every keystroke with a 300ms debounce.</p>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% input name="q"
+         label="Search users"
+         placeholder="Type to search..."
+         icon="🔍"
+         icon_position="left"
+         hx_get="/users/search/"
+         hx_target="#results"
+         hx_swap="innerHTML"
+         hx_trigger="keyup changed delay:300ms" %}
+
+&lt;div id="results"&gt;
+  {% for user in users %}
+    &lt;p&gt;{{ user.name }}&lt;/p&gt;
+  {% endfor %}
+&lt;/div&gt;{% endverbatim %}</code></pre>
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-python"># views.py
+def search_users(request):
+    q = request.GET.get("q", "")
+    users = User.objects.filter(name__icontains=q)
+    return render(request, "partials/user_list.html", {"users": users})</code></pre>
+    </div>
+  </section>
+
+  <!-- Form with HTMX -->
+  <section class="space-y-4" id="form">
+    <h2 class="text-xl font-semibold">Form — submit without page reload</h2>
+    <p class="text-sm text-muted-foreground">Full form that submits via HTMX and swaps the success message in place.</p>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+&lt;form hx-post="/contact/" hx-target="#contact-form" hx-swap="outerHTML" id="contact-form"&gt;
+  {% csrf_token %}
+  {% input name="name" label="Name" required=True %}
+  {% input name="email" label="Email" type="email" required=True %}
+  {% textarea name="message" label="Message" rows=4 required=True %}
+  {% button type="submit" hx_indicator="#spinner" %}Send message{% endbutton %}
+  &lt;span id="spinner" class="htmx-indicator text-sm text-muted-foreground ml-2"&gt;Sending...&lt;/span&gt;
+&lt;/form&gt;{% endverbatim %}</code></pre>
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-python"># views.py
+def contact(request):
+    if request.method == "POST":
+        # process form...
+        return render(request, "partials/contact_success.html")
+    return render(request, "contact.html")</code></pre>
+    </div>
+  </section>
+
+  <!-- Select with dependent dropdown -->
+  <section class="space-y-4" id="dependent-select">
+    <h2 class="text-xl font-semibold">Dependent Select (cascading)</h2>
+    <p class="text-sm text-muted-foreground">When the user changes a select, HTMX loads the options for the next select dynamically.</p>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% select name="country"
+          label="Country"
+          choices=country_choices
+          placeholder="Select country..."
+          hx_get="/cities/"
+          hx_target="#city-select"
+          hx_trigger="change"
+          hx_include="[name='country']" %}
+
+&lt;div id="city-select"&gt;
+  {% select name="city" label="City" choices=city_choices placeholder="Select city..." %}
+&lt;/div&gt;{% endverbatim %}</code></pre>
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-python"># views.py
+def cities(request):
+    country = request.GET.get("country")
+    cities = City.objects.filter(country=country).values_list("id", "name")
+    return render(request, "partials/city_select.html", {"city_choices": list(cities)})</code></pre>
+    </div>
+  </section>
+
+  <!-- Delete with confirmation -->
+  <section class="space-y-4" id="delete">
+    <h2 class="text-xl font-semibold">Delete with confirmation modal</h2>
+    <p class="text-sm text-muted-foreground">Open a confirm modal, then trigger HTMX DELETE on confirm.</p>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% modal id="del-{{ item.id }}" trigger_label="Delete" title="Delete this item?" description="This cannot be undone." %}
+  &lt;div class="mt-4 flex justify-end gap-2"&gt;
+    {% button variant="outline" %}Cancel{% endbutton %}
+    {% button variant="destructive"
+              hx_delete="/items/{{ item.id }}/"
+              hx_target="#item-{{ item.id }}"
+              hx_swap="outerHTML swap:0.3s"
+              hx_confirm="Are you absolutely sure?" %}
+      Delete
+    {% endbutton %}
+  &lt;/div&gt;
+{% endmodal %}{% endverbatim %}</code></pre>
+    </div>
+  </section>
+
+  <!-- Inline edit -->
+  <section class="space-y-4" id="inline-edit">
+    <h2 class="text-xl font-semibold">Inline edit</h2>
+    <p class="text-sm text-muted-foreground">Click a value to edit it in place, save with HTMX PATCH.</p>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+&lt;div id="user-name" x-data="{ editing: false }"&gt;
+  &lt;span x-show="!editing" @click="editing = true" class="cursor-pointer hover:underline"&gt;
+    {{ user.name }}
+  &lt;/span&gt;
+  &lt;div x-show="editing" class="flex gap-2"&gt;
+    {% input name="name"
+              value=user.name
+              hx_patch="/users/{{ user.id }}/"
+              hx_target="#user-name"
+              hx_swap="outerHTML"
+              hx_trigger="keyup[key=='Enter']" %}
+    &lt;span class="text-xs text-muted-foreground mt-2"&gt;Press Enter to save&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;{% endverbatim %}</code></pre>
+    </div>
+  </section>
+
+  <!-- HTMX attributes reference -->
+  <section class="space-y-4" id="reference">
+    <h2 class="text-xl font-semibold">HTMX props reference</h2>
+    <p class="text-sm text-muted-foreground">All <code class="bg-muted px-1 rounded">hx_*</code> and <code class="bg-muted px-1 rounded">data_*</code> props auto-convert to their HTML attribute equivalent.</p>
+    <div class="rounded-lg border overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="border-b bg-muted/50">
+          <tr>
+            <th class="text-left px-4 py-3 font-medium">Prop (Django)</th>
+            <th class="text-left px-4 py-3 font-medium">HTML output</th>
+            <th class="text-left px-4 py-3 font-medium">Description</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y">
+          <tr><td class="px-4 py-3 font-mono text-xs">hx_get="/url/"</td><td class="px-4 py-3 font-mono text-xs">hx-get="/url/"</td><td class="px-4 py-3 text-muted-foreground">GET request on trigger</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">hx_post="/url/"</td><td class="px-4 py-3 font-mono text-xs">hx-post="/url/"</td><td class="px-4 py-3 text-muted-foreground">POST request on trigger</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">hx_patch="/url/"</td><td class="px-4 py-3 font-mono text-xs">hx-patch="/url/"</td><td class="px-4 py-3 text-muted-foreground">PATCH request</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">hx_delete="/url/"</td><td class="px-4 py-3 font-mono text-xs">hx-delete="/url/"</td><td class="px-4 py-3 text-muted-foreground">DELETE request</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">hx_target="#id"</td><td class="px-4 py-3 font-mono text-xs">hx-target="#id"</td><td class="px-4 py-3 text-muted-foreground">Element to swap</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">hx_swap="outerHTML"</td><td class="px-4 py-3 font-mono text-xs">hx-swap="outerHTML"</td><td class="px-4 py-3 text-muted-foreground">How to insert response</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">hx_trigger="keyup"</td><td class="px-4 py-3 font-mono text-xs">hx-trigger="keyup"</td><td class="px-4 py-3 text-muted-foreground">Event that fires the request</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">hx_indicator="#id"</td><td class="px-4 py-3 font-mono text-xs">hx-indicator="#id"</td><td class="px-4 py-3 text-muted-foreground">Loading indicator element</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">hx_confirm="Sure?"</td><td class="px-4 py-3 font-mono text-xs">hx-confirm="Sure?"</td><td class="px-4 py-3 text-muted-foreground">Native confirm dialog before request</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">hx_push_url="true"</td><td class="px-4 py-3 font-mono text-xs">hx-push-url="true"</td><td class="px-4 py-3 text-muted-foreground">Updates browser URL</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

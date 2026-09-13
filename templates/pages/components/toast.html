@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load silkui_tags %}
+
+{% block title %}Toast — SilkUI{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-8 py-12 space-y-12">
+
+  <div class="space-y-2">
+    <p class="text-sm text-muted-foreground">Feedback</p>
+    <h1 class="text-3xl font-bold tracking-tight">Toast</h1>
+    <p class="text-muted-foreground">Brief notification messages triggered by user actions.</p>
+  </div>
+
+  <section class="space-y-3">
+    <h2 class="text-lg font-semibold">Installation</h2>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText('silkui add toast'); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-bash">silkui add toast</code></pre>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-lg font-semibold">Setup in base.html</h2>
+    <p class="text-sm text-muted-foreground">Place once in your base template, before <code class="bg-muted px-1 rounded">&lt;/body&gt;</code>.</p>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+{% include "components/toast.html" %}{% endverbatim %}</code></pre>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-lg font-semibold">Variants</h2>
+    <div class="rounded-lg border p-6 bg-card">
+      <div class="flex flex-wrap gap-3">
+        <button type="button" @click="$dispatch('toast', { title: 'Saved!', description: 'Your changes have been saved.' })" class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-4 py-2 transition-colors">Default</button>
+        <button type="button" @click="$dispatch('toast', { title: 'Success!', description: 'Operation completed.', variant: 'success' })" class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-4 py-2 transition-colors">Success</button>
+        <button type="button" @click="$dispatch('toast', { title: 'Error', description: 'Something went wrong.', variant: 'destructive' })" class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-4 py-2 transition-colors">Destructive</button>
+      </div>
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">&lt;button @click="$dispatch('toast', { title: 'Saved!', description: 'Changes saved.', variant: 'success' })"&gt;
+  Save
+&lt;/button&gt;</code></pre>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-lg font-semibold">Event payload</h2>
+    <div class="rounded-lg border overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="border-b bg-muted/50">
+          <tr>
+            <th class="text-left px-4 py-3 font-medium">Key</th>
+            <th class="text-left px-4 py-3 font-medium">Type</th>
+            <th class="text-left px-4 py-3 font-medium">Default</th>
+            <th class="text-left px-4 py-3 font-medium">Description</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y">
+          <tr><td class="px-4 py-3 font-mono text-xs">title</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3">—</td><td class="px-4 py-3 text-muted-foreground">Required. Main message.</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">description</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3 font-mono text-xs">""</td><td class="px-4 py-3 text-muted-foreground">Optional subtitle</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">variant</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3 font-mono text-xs">default</td><td class="px-4 py-3 text-muted-foreground">default · success · destructive</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">duration</td><td class="px-4 py-3 text-muted-foreground">number</td><td class="px-4 py-3 font-mono text-xs">4000</td><td class="px-4 py-3 text-muted-foreground">Auto-dismiss delay in ms</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="flex justify-between pt-4 border-t text-sm">
+    <a href="/docs/modal/" class="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> Modal
+    </a>
+    <a href="/docs/input/" class="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+      Input <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  </div>
+
+</div>
+{% endblock %}

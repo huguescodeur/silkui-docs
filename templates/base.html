@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en" x-data="{ darkMode: localStorage.getItem('theme') === 'dark' }" x-init="$watch('darkMode', v => { localStorage.setItem('theme', v ? 'dark' : 'light'); $el.classList.toggle('dark', v) })" :class="darkMode ? 'dark' : ''" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}SilkUI — Django UI Components{% endblock %}</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            border: "hsl(var(--border))",
+            input: "hsl(var(--input))",
+            ring: "hsl(var(--ring))",
+            background: "hsl(var(--background))",
+            foreground: "hsl(var(--foreground))",
+            primary: { DEFAULT: "hsl(var(--primary))", foreground: "hsl(var(--primary-foreground))" },
+            secondary: { DEFAULT: "hsl(var(--secondary))", foreground: "hsl(var(--secondary-foreground))" },
+            destructive: { DEFAULT: "hsl(var(--destructive))", foreground: "hsl(var(--destructive-foreground))" },
+            muted: { DEFAULT: "hsl(var(--muted))", foreground: "hsl(var(--muted-foreground))" },
+            accent: { DEFAULT: "hsl(var(--accent))", foreground: "hsl(var(--accent-foreground))" },
+            popover: { DEFAULT: "hsl(var(--popover))", foreground: "hsl(var(--popover-foreground))" },
+            card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
+          },
+          borderRadius: {
+            lg: "var(--radius)",
+            md: "calc(var(--radius) - 2px)",
+            sm: "calc(var(--radius) - 4px)",
+          },
+        },
+      },
+    };
+    // Apply theme before paint
+    if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+  </script>
+
+  <style>
+    :root {
+      --background: 0 0% 100%; --foreground: 222.2 84% 4.9%;
+      --card: 0 0% 100%; --card-foreground: 222.2 84% 4.9%;
+      --popover: 0 0% 100%; --popover-foreground: 222.2 84% 4.9%;
+      --primary: 222.2 47.4% 11.2%; --primary-foreground: 210 40% 98%;
+      --secondary: 210 40% 96.1%; --secondary-foreground: 222.2 47.4% 11.2%;
+      --muted: 210 40% 96.1%; --muted-foreground: 215.4 16.3% 46.9%;
+      --accent: 210 40% 96.1%; --accent-foreground: 222.2 47.4% 11.2%;
+      --destructive: 0 84.2% 60.2%; --destructive-foreground: 210 40% 98%;
+      --border: 214.3 31.8% 91.4%; --input: 214.3 31.8% 91.4%;
+      --ring: 222.2 84% 4.9%; --radius: 0.5rem;
+    }
+    .dark {
+      --background: 222.2 84% 4.9%; --foreground: 210 40% 98%;
+      --card: 222.2 84% 4.9%; --card-foreground: 210 40% 98%;
+      --popover: 222.2 84% 4.9%; --popover-foreground: 210 40% 98%;
+      --primary: 210 40% 98%; --primary-foreground: 222.2 47.4% 11.2%;
+      --secondary: 217.2 32.6% 17.5%; --secondary-foreground: 210 40% 98%;
+      --muted: 217.2 32.6% 17.5%; --muted-foreground: 215 20.2% 65.1%;
+      --accent: 217.2 32.6% 17.5%; --accent-foreground: 210 40% 98%;
+      --destructive: 0 62.8% 30.6%; --destructive-foreground: 210 40% 98%;
+      --border: 217.2 32.6% 17.5%; --input: 217.2 32.6% 17.5%;
+      --ring: 212.7 26.8% 83.9%;
+    }
+    *, *::before, *::after { border-color: hsl(var(--border)); }
+    body { background-color: hsl(var(--background)); color: hsl(var(--foreground)); }
+    [x-cloak] { display: none !important; }
+    pre { tab-size: 2; }
+  </style>
+
+  <script>
+    document.addEventListener("alpine:init", () => {
+      Alpine.data("silkuiToast", () => ({
+        toasts: [],
+        show({ title, description = "", variant = "default", duration = 4000 }) {
+          const id = Date.now() + Math.random();
+          this.toasts.push({ id, title, description, variant, visible: true });
+          setTimeout(() => this.remove(id), duration);
+        },
+        remove(id) {
+          const toast = this.toasts.find((t) => t.id === id);
+          if (toast) toast.visible = false;
+          setTimeout(() => { this.toasts = this.toasts.filter((t) => t.id !== id); }, 300);
+        },
+      }));
+    });
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css" class="light-hljs" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css" class="dark-hljs" disabled />
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/django.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/bash.min.js"></script>
+  <script>
+    hljs.registerLanguage('django', window.hljsDefineDjango);
+    document.addEventListener('DOMContentLoaded', () => {
+      hljs.highlightAll();
+      syncHljsTheme();
+    });
+    function syncHljsTheme() {
+      const isDark = document.documentElement.classList.contains('dark');
+      document.querySelector('.light-hljs').disabled = isDark;
+      document.querySelector('.dark-hljs').disabled = !isDark;
+    }
+  </script>
+</head>
+<body x-data class="h-full bg-background font-sans antialiased">
+
+  <!-- Top nav -->
+  <header class="sticky top-0 z-40 border-b bg-background/95 backdrop-blur">
+    <div class="flex h-14 items-center px-6 gap-4">
+      <a href="/" class="flex items-center gap-2 font-bold text-lg tracking-tight">
+        SilkUI
+        <span class="text-xs font-normal text-muted-foreground hidden sm:inline">for Django</span>
+      </a>
+      <div class="flex-1"></div>
+      <!-- Dark mode toggle -->
+      <button @click="darkMode = !darkMode; $nextTick(() => syncHljsTheme())" class="rounded-md p-2 hover:bg-accent transition-colors" aria-label="Toggle theme">
+        <svg x-show="!darkMode" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M6 .278a.77.77 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278"/>
+        </svg>
+        <svg x-show="darkMode" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707"/>
+        </svg>
+      </button>
+      <a href="https://github.com/huguescodeur/silkui" target="_blank" class="rounded-md p-2 hover:bg-accent transition-colors" aria-label="GitHub">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <div class="flex h-[calc(100vh-3.5rem)]">
+    <!-- Sidebar -->
+    <aside class="hidden md:flex w-56 flex-col border-r overflow-y-auto py-6 px-3 shrink-0">
+      {% include "partials/sidebar.html" %}
+    </aside>
+
+    <!-- Main content -->
+    <main class="flex-1 overflow-y-auto">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  {% load silkui_tags %}
+  {% include "components/toast.html" %}
+
+</body>
+</html>

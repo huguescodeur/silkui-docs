@@ -1,0 +1,14 @@
+{% comment %}
+Usage: {% include "partials/code_block.html" with lang="django" code=code_snippet %}
+{% endcomment %}
+<div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+  <button
+    x-data="{ copied: false }"
+    @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)"
+    class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10 rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent"
+  >
+    <span x-show="!copied">Copy</span>
+    <span x-show="copied" x-cloak>Copied!</span>
+  </button>
+  <pre class="overflow-x-auto p-4 text-sm"><code class="language-{{ lang }}">{{ code }}</code></pre>
+</div>

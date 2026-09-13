@@ -1,0 +1,972 @@
+{% extends "base.html" %}
+{% load silkui_tags %}
+
+{% block title %}Blocks — SilkUI{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-8 py-12 space-y-20">
+
+  <div class="space-y-2">
+    <h1 class="text-3xl font-bold tracking-tight">Blocks</h1>
+    <p class="text-muted-foreground">Pre-built layouts. Copy and adapt to your project.</p>
+    <!-- Quick nav -->
+    <div class="flex flex-wrap gap-2 pt-2 text-xs text-muted-foreground">
+      <a href="#auth" class="hover:text-foreground underline underline-offset-4">Auth</a>
+      <span>·</span>
+      <a href="#nav" class="hover:text-foreground underline underline-offset-4">Navigation</a>
+      <span>·</span>
+      <a href="#sidebar" class="hover:text-foreground underline underline-offset-4">Sidebar</a>
+      <span>·</span>
+      <a href="#dashboard" class="hover:text-foreground underline underline-offset-4">Dashboard</a>
+      <span>·</span>
+      <a href="#table" class="hover:text-foreground underline underline-offset-4">Table</a>
+      <span>·</span>
+      <a href="#cards" class="hover:text-foreground underline underline-offset-4">Product Cards</a>
+      <span>·</span>
+      <a href="#settings" class="hover:text-foreground underline underline-offset-4">Settings</a>
+      <span>·</span>
+      <a href="#customization" class="hover:text-foreground underline underline-offset-4">Customization</a>
+    </div>
+  </div>
+
+  <!-- ─── AUTH ──────────────────────────────────────────── -->
+  <section id="auth" class="space-y-10">
+    <h2 class="text-2xl font-semibold tracking-tight border-b pb-2">Auth</h2>
+
+    <!-- Login -->
+    <div class="space-y-4">
+      <h3 class="text-lg font-medium">Login</h3>
+      <div class="rounded-lg border p-8 bg-muted/20 flex justify-center">
+        <div class="w-full max-w-sm space-y-5">
+          {% card %}
+            {% card_header %}
+              {% card_title %}Sign in{% endcard_title %}
+              {% card_description %}Welcome back — enter your credentials{% endcard_description %}
+            {% endcard_header %}
+            {% card_content %}
+              <div class="space-y-4">
+                <!-- Social buttons -->
+                <div class="grid grid-cols-2 gap-3">
+                  {% button variant="outline" class="w-full gap-2" %}
+                    <svg viewBox="0 0 24 24" width="15" height="15"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    Google
+                  {% endbutton %}
+                  {% button variant="outline" class="w-full gap-2" %}
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                  {% endbutton %}
+                </div>
+                <div class="relative flex items-center gap-3">
+                  <div class="flex-1 border-t"></div>
+                  <span class="text-xs text-muted-foreground uppercase tracking-wider">Or</span>
+                  <div class="flex-1 border-t"></div>
+                </div>
+                {% input name="email" label="Email" type="email" placeholder="you@example.com" required=True %}
+                {% input name="password" label="Password" type="password" placeholder="••••••••" required=True %}
+                <div class="flex items-center justify-between">
+                  {% checkbox name="remember" label="Remember me" %}
+                  <a href="#" class="text-xs text-muted-foreground hover:text-foreground underline underline-offset-4">Forgot password?</a>
+                </div>
+                {% button type="submit" class="w-full" %}Sign in{% endbutton %}
+              </div>
+            {% endcard_content %}
+          {% endcard %}
+          <p class="text-center text-sm text-muted-foreground">
+            No account? <a href="#" class="underline underline-offset-4 hover:text-foreground">Sign up</a>
+          </p>
+        </div>
+      </div>
+      <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+        <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+          <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+        </button>
+        <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% card %}
+  {% card_header %}
+    {% card_title %}Sign in{% endcard_title %}
+    {% card_description %}Welcome back{% endcard_description %}
+  {% endcard_header %}
+  {% card_content %}
+    &lt;form method="post" class="space-y-4"&gt;
+      {% csrf_token %}
+      &lt;div class="grid grid-cols-2 gap-3"&gt;
+        &lt;a href="{% url 'social:begin' 'google-oauth2' %}" class="..."&gt;Google&lt;/a&gt;
+        &lt;a href="{% url 'social:begin' 'github' %}" class="..."&gt;GitHub&lt;/a&gt;
+      &lt;/div&gt;
+      {% input name="email" label="Email" type="email" required=True %}
+      {% input name="password" label="Password" type="password" required=True %}
+      {% checkbox name="remember" label="Remember me" %}
+      {% button type="submit" class="w-full" %}Sign in{% endbutton %}
+    &lt;/form&gt;
+  {% endcard_content %}
+{% endcard %}{% endverbatim %}</code></pre>
+      </div>
+    </div>
+
+    <!-- Register -->
+    <div class="space-y-4">
+      <h3 class="text-lg font-medium">Registration</h3>
+      <div class="rounded-lg border p-8 bg-muted/20 flex justify-center">
+        <div class="w-full max-w-sm">
+          {% card %}
+            {% card_header %}
+              {% card_title %}Create an account{% endcard_title %}
+              {% card_description %}Start your free trial. No credit card required.{% endcard_description %}
+            {% endcard_header %}
+            {% card_content %}
+              <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-3">
+                  {% button variant="outline" class="w-full gap-2" %}
+                    <svg viewBox="0 0 24 24" width="15" height="15"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    Google
+                  {% endbutton %}
+                  {% button variant="outline" class="w-full gap-2" %}
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                  {% endbutton %}
+                </div>
+                <div class="relative flex items-center gap-3">
+                  <div class="flex-1 border-t"></div>
+                  <span class="text-xs text-muted-foreground uppercase tracking-wider">Or</span>
+                  <div class="flex-1 border-t"></div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                  {% input name="first_name" label="First name" placeholder="Alice" %}
+                  {% input name="last_name" label="Last name" placeholder="Martin" %}
+                </div>
+                {% input name="email" label="Email" type="email" placeholder="you@example.com" required=True %}
+                {% input name="password1" label="Password" type="password" placeholder="Min. 8 characters" required=True %}
+                {% input name="password2" label="Confirm password" type="password" placeholder="Repeat password" required=True %}
+                {% checkbox name="terms" label="I agree to the Terms of Service and Privacy Policy" required=True %}
+                {% button type="submit" class="w-full" %}Create account{% endbutton %}
+              </div>
+            {% endcard_content %}
+          {% endcard %}
+          <p class="text-center text-sm text-muted-foreground mt-4">
+            Already have an account? <a href="#" class="underline underline-offset-4 hover:text-foreground">Sign in</a>
+          </p>
+        </div>
+      </div>
+      <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+        <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+          <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+        </button>
+        <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% card %}
+  {% card_content %}
+    &lt;form method="post" class="space-y-4"&gt;
+      {% csrf_token %}
+      &lt;div class="grid grid-cols-2 gap-3"&gt;
+        {% input name="first_name" label="First name" %}
+        {% input name="last_name" label="Last name" %}
+      &lt;/div&gt;
+      {% input name="email" label="Email" type="email" required=True %}
+      {% input name="password1" label="Password" type="password" required=True %}
+      {% input name="password2" label="Confirm password" type="password" required=True %}
+      {% checkbox name="terms" label="I agree to the Terms of Service" required=True %}
+      {% button type="submit" class="w-full" %}Create account{% endbutton %}
+    &lt;/form&gt;
+  {% endcard_content %}
+{% endcard %}{% endverbatim %}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── NAVIGATION HEADER ────────────────────────────── -->
+  <section id="nav" class="space-y-6">
+    <h2 class="text-2xl font-semibold tracking-tight border-b pb-2">Navigation Header</h2>
+
+    {% tabs active="nav1" %}
+      {% tab id="nav1" label="Simple" %}
+        <div class="rounded-lg border overflow-hidden">
+          <header class="bg-background border-b px-6 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-6">
+              <span class="font-bold text-lg">MyApp</span>
+              <nav class="hidden md:flex gap-1">
+                <a href="javascript:void(0)" class="px-3 py-1.5 text-sm rounded-md bg-accent font-medium">Dashboard</a>
+                <a href="javascript:void(0)" class="px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:bg-accent/50 transition-colors">Projects</a>
+                <a href="javascript:void(0)" class="px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:bg-accent/50 transition-colors">Team</a>
+                <a href="javascript:void(0)" class="px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:bg-accent/50 transition-colors">Settings</a>
+              </nav>
+            </div>
+            <div class="flex items-center gap-2">
+              {% button variant="ghost" size="sm" %}Log in{% endbutton %}
+              {% button size="sm" %}Sign up{% endbutton %}
+            </div>
+          </header>
+          <div class="bg-muted/20 h-24 flex items-center justify-center text-sm text-muted-foreground">Page content</div>
+        </div>
+        <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+          <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+            <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+          </button>
+          <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+&lt;header class="border-b px-6 py-3 flex items-center justify-between"&gt;
+  &lt;div class="flex items-center gap-6"&gt;
+    &lt;a href="/" class="font-bold text-lg"&gt;MyApp&lt;/a&gt;
+    &lt;nav class="flex gap-1"&gt;
+      &lt;a href="/dashboard/" class="px-3 py-1.5 text-sm rounded-md bg-accent font-medium"&gt;Dashboard&lt;/a&gt;
+      &lt;a href="/projects/" class="px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:bg-accent/50"&gt;Projects&lt;/a&gt;
+      &lt;a href="/settings/" class="px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:bg-accent/50"&gt;Settings&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+  &lt;div class="flex gap-2"&gt;
+    {% button variant="ghost" size="sm" %}Log in{% endbutton %}
+    {% button size="sm" %}Sign up{% endbutton %}
+  &lt;/div&gt;
+&lt;/header&gt;{% endverbatim %}</code></pre>
+        </div>
+      {% endtab %}
+
+      {% tab id="nav2" label="With user dropdown" %}
+        <div class="rounded-lg border overflow-hidden">
+          <header class="bg-background border-b px-6 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-6">
+              <span class="font-bold text-lg">MyApp</span>
+              <nav class="hidden md:flex gap-1">
+                <a href="javascript:void(0)" class="px-3 py-1.5 text-sm rounded-md bg-accent font-medium">Dashboard</a>
+                <a href="javascript:void(0)" class="px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:bg-accent/50 transition-colors">Projects</a>
+                <a href="javascript:void(0)" class="px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:bg-accent/50 transition-colors">Team</a>
+              </nav>
+            </div>
+            <div class="flex items-center gap-3">
+              {% badge variant="secondary" %}Pro{% endbadge %}
+              {% dropdown trigger_label="Alice M." %}
+                {% dropdown_item href="javascript:void(0)" %}Profile{% enddropdown_item %}
+                {% dropdown_item href="javascript:void(0)" %}Billing{% enddropdown_item %}
+                {% dropdown_item href="javascript:void(0)" %}Settings{% enddropdown_item %}
+                {% dropdown_separator %}
+                {% dropdown_item href="javascript:void(0)" %}Logout{% enddropdown_item %}
+              {% enddropdown %}
+            </div>
+          </header>
+          <div class="bg-muted/20 h-24 flex items-center justify-center text-sm text-muted-foreground">Page content</div>
+        </div>
+        <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+          <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+            <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+          </button>
+          <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+&lt;header class="border-b px-6 py-3 flex items-center justify-between"&gt;
+  &lt;nav class="flex gap-1"&gt;...&lt;/nav&gt;
+  &lt;div class="flex items-center gap-3"&gt;
+    {% badge variant="secondary" %}Pro{% endbadge %}
+    {% dropdown trigger_label=request.user.get_short_name %}
+      {% dropdown_item href="/profile/" %}Profile{% enddropdown_item %}
+      {% dropdown_item href="/billing/" %}Billing{% enddropdown_item %}
+      {% dropdown_separator %}
+      {% dropdown_item href="/logout/" %}Logout{% enddropdown_item %}
+    {% enddropdown %}
+  &lt;/div&gt;
+&lt;/header&gt;{% endverbatim %}</code></pre>
+        </div>
+      {% endtab %}
+
+      {% tab id="nav3" label="Dark branded" %}
+        <div class="rounded-lg border overflow-hidden">
+          <header class="bg-slate-900 px-6 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-6">
+              <span class="font-bold text-lg text-white">MyApp</span>
+              <nav class="hidden md:flex gap-1">
+                <a href="javascript:void(0)" class="px-3 py-1.5 text-sm rounded-md bg-white/10 text-white font-medium">Dashboard</a>
+                <a href="javascript:void(0)" class="px-3 py-1.5 text-sm rounded-md text-slate-300 hover:bg-white/10 hover:text-white transition-colors">Projects</a>
+                <a href="javascript:void(0)" class="px-3 py-1.5 text-sm rounded-md text-slate-300 hover:bg-white/10 hover:text-white transition-colors">Team</a>
+              </nav>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="javascript:void(0)" class="text-sm text-slate-300 hover:text-white transition-colors px-3 py-1.5">Log in</a>
+              <a href="javascript:void(0)" class="text-sm bg-white text-slate-900 font-medium px-4 py-1.5 rounded-md hover:bg-slate-100 transition-colors">Sign up</a>
+            </div>
+          </header>
+          <div class="bg-muted/20 h-24 flex items-center justify-center text-sm text-muted-foreground">Page content</div>
+        </div>
+        <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+          <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+            <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+          </button>
+          <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">&lt;header class="bg-slate-900 px-6 py-3 flex items-center justify-between"&gt;
+  &lt;nav class="flex gap-1"&gt;
+    &lt;a href="/" class="px-3 py-1.5 text-sm rounded-md bg-white/10 text-white font-medium"&gt;Dashboard&lt;/a&gt;
+    &lt;a href="/projects/" class="px-3 py-1.5 text-sm rounded-md text-slate-300 hover:bg-white/10 hover:text-white"&gt;Projects&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;a href="/signup/" class="text-sm bg-white text-slate-900 font-medium px-4 py-1.5 rounded-md"&gt;Sign up&lt;/a&gt;
+&lt;/header&gt;</code></pre>
+        </div>
+      {% endtab %}
+    {% endtabs %}
+  </section>
+
+  <!-- ─── SIDEBAR ───────────────────────────────────────── -->
+  <section id="sidebar" class="space-y-6">
+    <h2 class="text-2xl font-semibold tracking-tight border-b pb-2">Sidebar Navigation</h2>
+
+    {% tabs active="sb1" %}
+      {% tab id="sb1" label="Simple" %}
+        <div class="rounded-lg border overflow-hidden flex h-64">
+          <aside class="w-52 border-r bg-background flex flex-col py-4 px-2 shrink-0">
+            <p class="px-3 mb-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">General</p>
+            <a href="javascript:void(0)" class="px-3 py-2 text-sm rounded-md bg-accent font-medium">Dashboard</a>
+            <a href="javascript:void(0)" class="px-3 py-2 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors">Projects</a>
+            <a href="javascript:void(0)" class="px-3 py-2 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors">Analytics</a>
+            <p class="px-3 mt-4 mb-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Account</p>
+            <a href="javascript:void(0)" class="px-3 py-2 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors">Settings</a>
+            <a href="javascript:void(0)" class="px-3 py-2 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors">Billing</a>
+          </aside>
+          <main class="flex-1 bg-muted/20 flex items-center justify-center text-sm text-muted-foreground">Content area</main>
+        </div>
+        <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+          <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+            <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+          </button>
+          <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}&lt;div class="flex h-screen"&gt;
+  &lt;aside class="w-52 border-r py-4 px-2"&gt;
+    &lt;p class="px-3 mb-1 text-xs font-semibold text-muted-foreground uppercase"&gt;General&lt;/p&gt;
+    &lt;a href="/dashboard/" class="px-3 py-2 text-sm rounded-md bg-accent font-medium block"&gt;Dashboard&lt;/a&gt;
+    &lt;a href="/projects/" class="px-3 py-2 text-sm rounded-md text-muted-foreground hover:bg-accent/50 block"&gt;Projects&lt;/a&gt;
+    &lt;p class="px-3 mt-4 mb-1 text-xs font-semibold text-muted-foreground uppercase"&gt;Account&lt;/p&gt;
+    &lt;a href="/settings/" class="px-3 py-2 text-sm rounded-md text-muted-foreground hover:bg-accent/50 block"&gt;Settings&lt;/a&gt;
+  &lt;/aside&gt;
+  &lt;main class="flex-1"&gt;{% block content %}{% endblock %}{% endverbatim %}&lt;/main&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      {% endtab %}
+
+      {% tab id="sb2" label="With icons" %}
+        <div class="rounded-lg border overflow-hidden flex h-64">
+          <aside class="w-56 border-r bg-background flex flex-col py-4 px-2 shrink-0">
+            <p class="px-3 mb-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">General</p>
+            <a href="javascript:void(0)" class="flex items-center gap-3 px-3 py-2 text-sm rounded-md bg-accent font-medium">
+              <span>📊</span> Dashboard
+            </a>
+            <a href="javascript:void(0)" class="flex items-center gap-3 px-3 py-2 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors">
+              <span>📁</span> Projects
+            </a>
+            <a href="javascript:void(0)" class="flex items-center gap-3 px-3 py-2 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors">
+              <span>📈</span> Analytics
+            </a>
+            <a href="javascript:void(0)" class="flex items-center gap-3 px-3 py-2 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors">
+              <span>💬</span> Messages <span class="ml-auto"><span class="bg-primary text-primary-foreground text-xs rounded-full px-1.5 py-0.5">3</span></span>
+            </a>
+            <div class="mt-auto pt-4 border-t mx-3">
+              <a href="javascript:void(0)" class="flex items-center gap-3 px-3 py-2 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors">
+                <span>⚙️</span> Settings
+              </a>
+            </div>
+          </aside>
+          <main class="flex-1 bg-muted/20 flex items-center justify-center text-sm text-muted-foreground">Content area</main>
+        </div>
+        <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+          <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+            <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+          </button>
+          <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}&lt;aside class="w-56 border-r py-4 px-2 flex flex-col"&gt;
+  &lt;a href="/dashboard/" class="flex items-center gap-3 px-3 py-2 text-sm rounded-md bg-accent font-medium"&gt;
+    📊 Dashboard
+  &lt;/a&gt;
+  &lt;a href="/messages/" class="flex items-center gap-3 px-3 py-2 text-sm rounded-md text-muted-foreground hover:bg-accent/50"&gt;
+    💬 Messages
+    &lt;span class="ml-auto bg-primary text-primary-foreground text-xs rounded-full px-1.5 py-0.5"&gt;
+      {{ unread_count }}
+    &lt;/span&gt;
+  &lt;/a&gt;
+  &lt;div class="mt-auto pt-4 border-t mx-3"&gt;
+    &lt;a href="/settings/" class="..."&gt;⚙️ Settings&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/aside&gt;{% endverbatim %}</code></pre>
+        </div>
+      {% endtab %}
+
+      {% tab id="sb3" label="With submenu" %}
+        <div class="rounded-lg border overflow-hidden flex h-72">
+          <aside class="w-56 border-r bg-background flex flex-col py-4 px-2 shrink-0 overflow-y-auto">
+            <a href="javascript:void(0)" class="flex items-center gap-3 px-3 py-2 text-sm rounded-md bg-accent font-medium">
+              📊 Dashboard
+            </a>
+            <!-- Submenu section -->
+            <div x-data="{ open: true }">
+              <button @click="open = !open" class="w-full flex items-center justify-between px-3 py-2 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors">
+                <span class="flex items-center gap-3"><span>📁</span> Projects</span>
+                <svg :class="open ? 'rotate-90' : ''" class="w-3 h-3 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+              <div x-show="open" x-collapse class="pl-9 space-y-0.5 mt-0.5">
+                <a href="javascript:void(0)" class="block px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors">All projects</a>
+                <a href="javascript:void(0)" class="block px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors">Active</a>
+                <a href="javascript:void(0)" class="block px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors">Archived</a>
+                <a href="javascript:void(0)" class="block px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors">+ New project</a>
+              </div>
+            </div>
+            <a href="javascript:void(0)" class="flex items-center gap-3 px-3 py-2 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors">
+              📈 Analytics
+            </a>
+            <a href="javascript:void(0)" class="flex items-center gap-3 px-3 py-2 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors">
+              ⚙️ Settings
+            </a>
+          </aside>
+          <main class="flex-1 bg-muted/20 flex items-center justify-center text-sm text-muted-foreground">Content area</main>
+        </div>
+        <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+          <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+            <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+          </button>
+          <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">&lt;aside class="w-56 border-r py-4 px-2"&gt;
+  &lt;a href="/dashboard/" class="..."&gt;📊 Dashboard&lt;/a&gt;
+
+  &lt;div x-data="{ open: true }"&gt;
+    &lt;button @click="open = !open" class="w-full flex items-center justify-between px-3 py-2 ..."&gt;
+      📁 Projects
+      &lt;svg :class="open ? 'rotate-90' : ''" class="w-3 h-3 transition-transform" ...&gt;...&lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;div x-show="open" class="pl-9 space-y-0.5"&gt;
+      &lt;a href="/projects/" class="..."&gt;All projects&lt;/a&gt;
+      &lt;a href="/projects/active/" class="..."&gt;Active&lt;/a&gt;
+      &lt;a href="/projects/archived/" class="..."&gt;Archived&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/aside&gt;</code></pre>
+        </div>
+      {% endtab %}
+    {% endtabs %}
+  </section>
+
+  <!-- ─── DASHBOARD HEADER ─────────────────────────────── -->
+  <section id="dashboard" class="space-y-4">
+    <h2 class="text-2xl font-semibold tracking-tight border-b pb-2">Dashboard</h2>
+    <div class="rounded-lg border bg-muted/20 overflow-hidden">
+      <div class="border-b bg-background px-6 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="font-bold">MyApp</span>
+          {% separator orientation="vertical" %}
+          <nav class="flex gap-1">
+            <a href="javascript:void(0)" class="px-3 py-1.5 text-sm rounded-md bg-accent font-medium">Dashboard</a>
+            <a href="javascript:void(0)" class="px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:bg-accent/50 transition-colors">Projects</a>
+            <a href="javascript:void(0)" class="px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:bg-accent/50 transition-colors">Settings</a>
+          </nav>
+        </div>
+        {% dropdown trigger_label="John Doe" %}
+          {% dropdown_item href="javascript:void(0)" %}Profile{% enddropdown_item %}
+          {% dropdown_item href="javascript:void(0)" %}Settings{% enddropdown_item %}
+          {% dropdown_separator %}
+          {% dropdown_item href="javascript:void(0)" %}Logout{% enddropdown_item %}
+        {% enddropdown %}
+      </div>
+      <div class="p-6 grid grid-cols-3 gap-4">
+        {% card %}
+          {% card_header %}{% card_title %}Revenue{% endcard_title %}{% card_description %}Monthly earnings{% endcard_description %}{% endcard_header %}
+          {% card_content %}<p class="text-2xl font-bold">$45,231</p><p class="text-xs text-muted-foreground mt-1">+20.1% from last month</p>{% endcard_content %}
+        {% endcard %}
+        {% card %}
+          {% card_header %}{% card_title %}Active Users{% endcard_title %}{% card_description %}Current sessions{% endcard_description %}{% endcard_header %}
+          {% card_content %}<p class="text-2xl font-bold">+2,350</p><p class="text-xs text-muted-foreground mt-1">+180% from last month</p>{% endcard_content %}
+        {% endcard %}
+        {% card %}
+          {% card_header %}{% card_title %}Sales{% endcard_title %}{% card_description %}Units sold today{% endcard_description %}{% endcard_header %}
+          {% card_content %}<p class="text-2xl font-bold">+12,234</p><p class="text-xs text-muted-foreground mt-1">+19% from last month</p>{% endcard_content %}
+        {% endcard %}
+      </div>
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+&lt;header class="border-b px-6 py-3 flex items-center justify-between"&gt;
+  &lt;div class="flex items-center gap-3"&gt;
+    &lt;span class="font-bold"&gt;MyApp&lt;/span&gt;
+    {% separator orientation="vertical" %}
+    &lt;nav class="flex gap-1"&gt;
+      &lt;a href="/dashboard/" class="px-3 py-1.5 text-sm rounded-md bg-accent font-medium"&gt;Dashboard&lt;/a&gt;
+      &lt;a href="/projects/" class="px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:bg-accent/50"&gt;Projects&lt;/a&gt;
+      &lt;a href="/settings/" class="px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:bg-accent/50"&gt;Settings&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+  {% dropdown trigger_label=request.user.get_short_name %}
+    {% dropdown_item href="/profile/" %}Profile{% enddropdown_item %}
+    {% dropdown_separator %}
+    {% dropdown_item href="/logout/" %}Logout{% enddropdown_item %}
+  {% enddropdown %}
+&lt;/header&gt;
+
+&lt;div class="p-6 grid grid-cols-3 gap-4"&gt;
+  {% for stat in stats %}
+    {% card %}
+      {% card_header %}
+        {% card_title %}{{ stat.label }}{% endcard_title %}
+        {% card_description %}{{ stat.sub }}{% endcard_description %}
+      {% endcard_header %}
+      {% card_content %}
+        &lt;p class="text-2xl font-bold"&gt;{{ stat.value }}&lt;/p&gt;
+        &lt;p class="text-xs text-muted-foreground"&gt;{{ stat.change }}&lt;/p&gt;
+      {% endcard_content %}
+    {% endcard %}
+  {% endfor %}
+&lt;/div&gt;{% endverbatim %}</code></pre>
+    </div>
+  </section>
+
+  <!-- ─── SEARCH + TABLE ────────────────────────────────── -->
+  <section id="table" class="space-y-4">
+    <h2 class="text-2xl font-semibold tracking-tight border-b pb-2">Search + Data Table</h2>
+    <div class="rounded-lg border p-6 bg-muted/20"
+         x-data="{
+           q: '',
+           sort: 'name',
+           users: [
+             {name:'Alice Martin', email:'alice@example.com', role:'Admin', active:true},
+             {name:'Bob Dupont', email:'bob@example.com', role:'Editor', active:true},
+             {name:'Claire Chen', email:'claire@example.com', role:'Viewer', active:false},
+             {name:'David Laurent', email:'david@example.com', role:'Admin', active:true},
+             {name:'Emma Wilson', email:'emma@example.com', role:'Editor', active:false}
+           ],
+           get filtered() {
+             let list = this.users.filter(u =>
+               u.name.toLowerCase().includes(this.q.toLowerCase()) ||
+               u.role.toLowerCase().includes(this.q.toLowerCase())
+             );
+             if (this.sort === 'name') list.sort((a,b) => a.name.localeCompare(b.name));
+             if (this.sort === '-name') list.sort((a,b) => b.name.localeCompare(a.name));
+             if (this.sort === 'role') list.sort((a,b) => a.role.localeCompare(b.role));
+             return list;
+           }
+         }">
+      <!-- Search bar -->
+      <div class="flex gap-2 mb-4">
+        <div class="relative flex-1">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm pointer-events-none">🔍</span>
+          <input x-model="q" type="text" placeholder="Search by name or role..."
+            class="w-full h-10 rounded-md border border-input bg-background px-3 pl-9 text-sm focus:outline-none focus:ring-2 focus:ring-ring transition-shadow">
+        </div>
+        <div class="flex gap-1">
+          <button type="button" @click="sort='name'" :class="sort==='name' ? 'bg-accent border-foreground/20' : ''" class="px-3 py-1.5 text-xs rounded-md border hover:bg-accent transition-colors">A→Z</button>
+          <button type="button" @click="sort='-name'" :class="sort==='-name' ? 'bg-accent border-foreground/20' : ''" class="px-3 py-1.5 text-xs rounded-md border hover:bg-accent transition-colors">Z→A</button>
+          <button type="button" @click="sort='role'" :class="sort==='role' ? 'bg-accent border-foreground/20' : ''" class="px-3 py-1.5 text-xs rounded-md border hover:bg-accent transition-colors">By role</button>
+        </div>
+      </div>
+      <!-- Table -->
+      <div class="rounded-lg border bg-background overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="border-b bg-muted/50">
+            <tr>
+              <th class="text-left px-4 py-3 font-medium">Name</th>
+              <th class="text-left px-4 py-3 font-medium hidden sm:table-cell">Email</th>
+              <th class="text-left px-4 py-3 font-medium">Role</th>
+              <th class="text-left px-4 py-3 font-medium">Status</th>
+              <th class="text-right px-4 py-3 font-medium">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y">
+            <template x-for="user in filtered" :key="user.name">
+              <tr class="hover:bg-muted/30 transition-colors">
+                <td class="px-4 py-3 font-medium" x-text="user.name"></td>
+                <td class="px-4 py-3 text-muted-foreground hidden sm:table-cell" x-text="user.email"></td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold" x-text="user.role"></span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
+                    :class="user.active ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-muted text-muted-foreground'"
+                    x-text="user.active ? 'Active' : 'Inactive'"></span>
+                </td>
+                <td class="px-4 py-3 text-right">
+                  <div class="flex gap-1 justify-end">
+                    <button type="button" class="inline-flex items-center justify-center rounded-md text-xs font-medium border border-input bg-background hover:bg-accent h-7 px-2 transition-colors">Edit</button>
+                    <button type="button" class="inline-flex items-center justify-center rounded-md text-xs font-medium text-destructive border border-destructive/30 hover:bg-destructive/10 h-7 px-2 transition-colors">Delete</button>
+                  </div>
+                </td>
+              </tr>
+            </template>
+            <tr x-show="filtered.length === 0">
+              <td colspan="5" class="px-4 py-8 text-center text-sm text-muted-foreground">
+                No users found for "<span x-text="q" class="font-medium"></span>"
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="border-t px-4 py-3 flex items-center justify-between text-xs text-muted-foreground">
+          <span><span x-text="filtered.length"></span> users</span>
+          <div class="flex gap-1">
+            <button type="button" class="px-2 py-1 rounded border hover:bg-accent transition-colors">Previous</button>
+            <button type="button" class="px-2 py-1 rounded border hover:bg-accent transition-colors">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% input name="q"
+         placeholder="Search users..."
+         icon="🔍" icon_position="left"
+         hx_get="/users/"
+         hx_target="#user-table"
+         hx_trigger="keyup changed delay:300ms"
+         hx_push_url="true" %}
+
+&lt;div id="user-table"&gt;
+  &lt;table class="w-full text-sm"&gt;
+    &lt;thead class="border-b bg-muted/50"&gt;
+      &lt;tr&gt;
+        &lt;th class="text-left px-4 py-3"&gt;Name&lt;/th&gt;
+        &lt;th class="text-left px-4 py-3"&gt;Role&lt;/th&gt;
+        &lt;th class="text-left px-4 py-3"&gt;Status&lt;/th&gt;
+        &lt;th class="text-right px-4 py-3"&gt;Actions&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody class="divide-y"&gt;
+      {% for user in users %}
+      &lt;tr&gt;
+        &lt;td class="px-4 py-3 font-medium"&gt;{{ user.name }}&lt;/td&gt;
+        &lt;td class="px-4 py-3"&gt;{% badge variant="outline" %}{{ user.role }}{% endbadge %}&lt;/td&gt;
+        &lt;td class="px-4 py-3"&gt;
+          {% if user.is_active %}{% badge variant="secondary" %}Active{% endbadge %}
+          {% else %}{% badge variant="outline" %}Inactive{% endbadge %}{% endif %}
+        &lt;/td&gt;
+        &lt;td class="px-4 py-3 text-right"&gt;
+          {% button size="sm" variant="outline" href="/users/{{ user.pk }}/edit/" %}Edit{% endbutton %}
+          {% button size="sm" variant="destructive" hx_delete="/users/{{ user.pk }}/" hx_confirm="Delete this user?" %}Delete{% endbutton %}
+        &lt;/td&gt;
+      &lt;/tr&gt;
+      {% empty %}
+      &lt;tr&gt;&lt;td colspan="4" class="px-4 py-8 text-center text-muted-foreground"&gt;No users found.&lt;/td&gt;&lt;/tr&gt;
+      {% endfor %}
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;{% endverbatim %}</code></pre>
+    </div>
+  </section>
+
+  <!-- ─── PRODUCT CARDS ─────────────────────────────────── -->
+  <section id="cards" class="space-y-6">
+    <h2 class="text-2xl font-semibold tracking-tight border-b pb-2">Product Cards</h2>
+
+    {% tabs active="pc1" %}
+      {% tab id="pc1" label="Minimal" %}
+        <div class="rounded-lg border p-6 bg-muted/20">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {% for name, price, desc in product_rows|default:"" %}{% empty %}
+            {% card %}
+              {% card_content %}
+                <div class="space-y-2">
+                  <p class="font-semibold">Wireless Headphones</p>
+                  <p class="text-xs text-muted-foreground">Premium sound, 30h battery, ANC</p>
+                  <p class="text-lg font-bold">$79.99</p>
+                  {% button class="w-full" size="sm" %}Add to cart{% endbutton %}
+                </div>
+              {% endcard_content %}
+            {% endcard %}
+            {% card %}
+              {% card_content %}
+                <div class="space-y-2">
+                  <p class="font-semibold">Mechanical Keyboard</p>
+                  <p class="text-xs text-muted-foreground">Compact TKL, RGB backlit, blue switches</p>
+                  <p class="text-lg font-bold">$129.99</p>
+                  {% button class="w-full" size="sm" %}Add to cart{% endbutton %}
+                </div>
+              {% endcard_content %}
+            {% endcard %}
+            {% card %}
+              {% card_content %}
+                <div class="space-y-2">
+                  <p class="font-semibold">USB-C Hub</p>
+                  <p class="text-xs text-muted-foreground">7-in-1, 4K HDMI, 100W PD charging</p>
+                  <p class="text-lg font-bold">$49.99</p>
+                  {% button class="w-full" size="sm" variant="outline" %}Sold out{% endbutton %}
+                </div>
+              {% endcard_content %}
+            {% endcard %}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+          <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+            <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+          </button>
+          <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+&lt;div class="grid grid-cols-3 gap-4"&gt;
+{% for product in products %}
+  {% card %}
+    {% card_content %}
+      &lt;div class="space-y-2"&gt;
+        &lt;p class="font-semibold"&gt;{{ product.name }}&lt;/p&gt;
+        &lt;p class="text-xs text-muted-foreground"&gt;{{ product.description }}&lt;/p&gt;
+        &lt;p class="text-lg font-bold"&gt;{{ product.price }}&lt;/p&gt;
+        {% if product.in_stock %}
+          {% button class="w-full" size="sm" %}Add to cart{% endbutton %}
+        {% else %}
+          {% button class="w-full" size="sm" variant="outline" disabled=True %}Sold out{% endbutton %}
+        {% endif %}
+      &lt;/div&gt;
+    {% endcard_content %}
+  {% endcard %}
+{% endfor %}
+&lt;/div&gt;{% endverbatim %}</code></pre>
+        </div>
+      {% endtab %}
+
+      {% tab id="pc2" label="With image + badge" %}
+        <div class="rounded-lg border p-6 bg-muted/20">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {% card %}
+              {% card_content class="p-0" %}
+                <div class="relative">
+                  <div class="h-36 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 rounded-t-lg flex items-center justify-center text-3xl">🎧</div>
+                  <span class="absolute top-2 right-2"><span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold bg-primary text-primary-foreground">Sale</span></span>
+                </div>
+                <div class="p-4 space-y-2">
+                  <div class="flex items-start justify-between">
+                    <p class="font-semibold text-sm">Wireless Headphones</p>
+                  </div>
+                  <div class="flex items-center gap-1 text-xs text-yellow-500">★★★★☆ <span class="text-muted-foreground">(128)</span></div>
+                  <div class="flex items-center gap-2">
+                    <p class="font-bold">$79.99</p>
+                    <p class="text-xs text-muted-foreground line-through">$99.99</p>
+                  </div>
+                  {% button class="w-full" size="sm" %}Add to cart{% endbutton %}
+                </div>
+              {% endcard_content %}
+            {% endcard %}
+            {% card %}
+              {% card_content class="p-0" %}
+                <div class="h-36 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-t-lg flex items-center justify-center text-3xl">⌨️</div>
+                <div class="p-4 space-y-2">
+                  <p class="font-semibold text-sm">Mechanical Keyboard</p>
+                  <div class="flex items-center gap-1 text-xs text-yellow-500">★★★★★ <span class="text-muted-foreground">(64)</span></div>
+                  <p class="font-bold">$129.99</p>
+                  {% button class="w-full" size="sm" %}Add to cart{% endbutton %}
+                </div>
+              {% endcard_content %}
+            {% endcard %}
+            {% card %}
+              {% card_content class="p-0" %}
+                <div class="relative">
+                  <div class="h-36 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-t-lg flex items-center justify-center text-3xl">🔌</div>
+                  <span class="absolute top-2 left-2"><span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold bg-secondary text-secondary-foreground">New</span></span>
+                </div>
+                <div class="p-4 space-y-2">
+                  <p class="font-semibold text-sm">USB-C Hub 7-in-1</p>
+                  <div class="flex items-center gap-1 text-xs text-yellow-500">★★★★☆ <span class="text-muted-foreground">(32)</span></div>
+                  <p class="font-bold">$49.99</p>
+                  {% button class="w-full" size="sm" %}Add to cart{% endbutton %}
+                </div>
+              {% endcard_content %}
+            {% endcard %}
+          </div>
+        </div>
+        <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+          <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+            <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+          </button>
+          <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% card %}
+  {% card_content class="p-0" %}
+    &lt;div class="relative"&gt;
+      &lt;img src="{{ product.image.url }}" alt="{{ product.name }}"
+           class="w-full h-40 object-cover rounded-t-lg"&gt;
+      {% if product.on_sale %}
+        &lt;span class="absolute top-2 right-2 bg-primary text-primary-foreground text-xs px-2 py-0.5 rounded-full"&gt;Sale&lt;/span&gt;
+      {% endif %}
+    &lt;/div&gt;
+    &lt;div class="p-4 space-y-2"&gt;
+      &lt;p class="font-semibold"&gt;{{ product.name }}&lt;/p&gt;
+      &lt;div class="flex items-center gap-2"&gt;
+        &lt;p class="font-bold"&gt;{{ product.price }}&lt;/p&gt;
+        {% if product.original_price %}
+          &lt;p class="text-xs text-muted-foreground line-through"&gt;{{ product.original_price }}&lt;/p&gt;
+        {% endif %}
+      &lt;/div&gt;
+      {% button class="w-full" size="sm" %}Add to cart{% endbutton %}
+    &lt;/div&gt;
+  {% endcard_content %}
+{% endcard %}{% endverbatim %}</code></pre>
+        </div>
+      {% endtab %}
+
+      {% tab id="pc3" label="Horizontal" %}
+        <div class="rounded-lg border p-6 bg-muted/20 space-y-3">
+          {% card %}
+            {% card_content class="p-0" %}
+              <div class="flex">
+                <div class="w-28 h-28 shrink-0 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 rounded-l-lg flex items-center justify-center text-3xl">🎧</div>
+                <div class="flex-1 p-4 flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-start justify-between">
+                      <p class="font-semibold">Wireless Headphones</p>
+                      <p class="font-bold">$79.99</p>
+                    </div>
+                    <p class="text-xs text-muted-foreground mt-1">Premium sound quality · 30h battery · Active noise cancellation</p>
+                  </div>
+                  <div class="flex items-center justify-between mt-3">
+                    {% badge variant="secondary" %}In stock{% endbadge %}
+                    {% button size="sm" %}Add to cart{% endbutton %}
+                  </div>
+                </div>
+              </div>
+            {% endcard_content %}
+          {% endcard %}
+          {% card %}
+            {% card_content class="p-0" %}
+              <div class="flex">
+                <div class="w-28 h-28 shrink-0 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-l-lg flex items-center justify-center text-3xl">⌨️</div>
+                <div class="flex-1 p-4 flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-start justify-between">
+                      <p class="font-semibold">Mechanical Keyboard</p>
+                      <p class="font-bold">$129.99</p>
+                    </div>
+                    <p class="text-xs text-muted-foreground mt-1">Compact TKL · RGB backlit · Blue switches</p>
+                  </div>
+                  <div class="flex items-center justify-between mt-3">
+                    {% badge variant="secondary" %}In stock{% endbadge %}
+                    {% button size="sm" %}Add to cart{% endbutton %}
+                  </div>
+                </div>
+              </div>
+            {% endcard_content %}
+          {% endcard %}
+        </div>
+        <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+          <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+            <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+          </button>
+          <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% for product in products %}
+{% card %}
+  {% card_content class="p-0" %}
+    &lt;div class="flex"&gt;
+      &lt;img src="{{ product.image.url }}"
+           class="w-28 h-28 object-cover rounded-l-lg shrink-0"&gt;
+      &lt;div class="flex-1 p-4 flex flex-col justify-between"&gt;
+        &lt;div&gt;
+          &lt;div class="flex justify-between"&gt;
+            &lt;p class="font-semibold"&gt;{{ product.name }}&lt;/p&gt;
+            &lt;p class="font-bold"&gt;{{ product.price }}&lt;/p&gt;
+          &lt;/div&gt;
+          &lt;p class="text-xs text-muted-foreground mt-1"&gt;{{ product.short_description }}&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="flex items-center justify-between mt-3"&gt;
+          {% if product.in_stock %}{% badge variant="secondary" %}In stock{% endbadge %}{% else %}{% badge variant="outline" %}Sold out{% endbadge %}{% endif %}
+          {% button size="sm" %}Add to cart{% endbutton %}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  {% endcard_content %}
+{% endcard %}
+{% endfor %}{% endverbatim %}</code></pre>
+        </div>
+      {% endtab %}
+    {% endtabs %}
+  </section>
+
+  <!-- ─── SETTINGS ──────────────────────────────────────── -->
+  <section id="settings" class="space-y-4">
+    <h2 class="text-2xl font-semibold tracking-tight border-b pb-2">Settings Form</h2>
+    <div class="rounded-lg border p-6 bg-muted/20">
+      {% tabs active="profile" %}
+        {% tab id="profile" label="Profile" %}
+          <div class="space-y-4 max-w-lg">
+            {% input name="name" label="Display name" value="John Doe" %}
+            {% textarea name="bio" label="Bio" placeholder="Tell us about yourself..." rows=3 hint="Max 160 characters." %}
+            {% input name="website" label="Website" placeholder="https://yoursite.com" %}
+            <div class="flex gap-2 pt-2">
+              {% button type="submit" %}Save changes{% endbutton %}
+              {% button variant="outline" %}Cancel{% endbutton %}
+            </div>
+          </div>
+        {% endtab %}
+        {% tab id="notifications" label="Notifications" %}
+          <div class="space-y-4 max-w-sm">
+            {% checkbox name="email_notif" label="Email notifications" checked=True hint="Important updates and alerts." %}
+            {% checkbox name="push_notif" label="Push notifications" hint="Browser push notifications." %}
+            {% checkbox name="marketing" label="Marketing emails" hint="Tips, product updates and offers." %}
+            <div class="pt-2">{% button type="submit" %}Save preferences{% endbutton %}</div>
+          </div>
+        {% endtab %}
+        {% tab id="danger" label="Danger Zone" %}
+          <div class="space-y-4 max-w-lg">
+            {% alert variant="destructive" %}
+              {% alert_title %}Delete account{% endalert_title %}
+              {% alert_description %}Once you delete your account, there is no going back.{% endalert_description %}
+            {% endalert %}
+            {% modal id="delete-account" trigger_label="Delete my account" title="Delete account?" description="This action is permanent and cannot be undone." %}
+              <div class="mt-4 flex justify-end gap-2">
+                {% button variant="outline" %}Cancel{% endbutton %}
+                {% button variant="destructive" %}Yes, delete my account{% endbutton %}
+              </div>
+            {% endmodal %}
+          </div>
+        {% endtab %}
+      {% endtabs %}
+    </div>
+  </section>
+
+  <!-- ─── CUSTOMIZATION ─────────────────────────────────── -->
+  <section id="customization" class="space-y-4">
+    <h2 class="text-2xl font-semibold tracking-tight border-b pb-2">Customization with Tailwind</h2>
+    <p class="text-sm text-muted-foreground">Every component accepts a <code class="bg-muted px-1 rounded">class</code> prop that adds to (not replaces) the default styles.</p>
+    <div class="rounded-lg border p-6 bg-card space-y-6">
+      <!-- Buttons -->
+      <div class="space-y-2">
+        <p class="text-xs font-medium text-muted-foreground uppercase tracking-wider">Buttons</p>
+        <div class="flex flex-wrap gap-3">
+          {% button class="rounded-full" %}Pill{% endbutton %}
+          {% button class="rounded-none" %}Square{% endbutton %}
+          {% button class="uppercase tracking-widest text-xs" %}Uppercase{% endbutton %}
+          {% button variant="outline" class="border-2 border-blue-500 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950" %}Custom color{% endbutton %}
+          {% button variant="outline" class="border-dashed" %}Dashed{% endbutton %}
+        </div>
+      </div>
+      <!-- Badges -->
+      <div class="space-y-2">
+        <p class="text-xs font-medium text-muted-foreground uppercase tracking-wider">Badges</p>
+        <div class="flex flex-wrap gap-3 items-center">
+          {% badge class="text-sm px-3 py-1" %}Large{% endbadge %}
+          {% badge class="rounded-sm" %}Square{% endbadge %}
+          {% badge variant="outline" class="border-orange-400 text-orange-600" %}Orange{% endbadge %}
+          {% badge variant="outline" class="border-green-500 text-green-600" %}Green{% endbadge %}
+          {% badge variant="outline" class="border-purple-500 text-purple-600" %}Purple{% endbadge %}
+        </div>
+      </div>
+      <!-- Input -->
+      <div class="space-y-2">
+        <p class="text-xs font-medium text-muted-foreground uppercase tracking-wider">Input</p>
+        <div class="flex flex-wrap gap-4 max-w-2xl">
+          {% input name="s1" label="Max-width" placeholder="Constrained width" container_class="max-w-xs" %}
+          {% input name="s2" label="Custom border" placeholder="Blue border" input_class="border-2 border-blue-500 focus-visible:ring-blue-500" %}
+          {% input name="s3" label="Large" placeholder="Large input" input_class="text-base h-12" %}
+        </div>
+      </div>
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% button class="rounded-full" %}Pill{% endbutton %}
+
+{% button variant="outline" class="border-2 border-blue-500 text-blue-500" %}Custom{% endbutton %}
+
+{% badge class="text-sm px-3 py-1" %}Large{% endbadge %}
+
+{% badge variant="outline" class="border-orange-400 text-orange-600" %}Orange{% endbadge %}
+
+{% input name="q" label="Max-width" placeholder="Constrained" container_class="max-w-xs" %}
+
+{% input name="q" label="Custom border" placeholder="Blue border" input_class="border-2 border-blue-500 focus-visible:ring-blue-500" %}
+
+{% input name="q" label="Large" placeholder="Large input" input_class="text-base h-12" %}{% endverbatim %}</code></pre>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

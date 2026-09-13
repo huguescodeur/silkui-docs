@@ -1,0 +1,623 @@
+{% extends "base.html" %}
+{% load silkui_tags %}
+
+{% block title %}Table — SilkUI{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-8 py-12 space-y-12">
+
+  <div class="space-y-2">
+    <p class="text-sm text-muted-foreground">Layout</p>
+    <h1 class="text-3xl font-bold tracking-tight">Table</h1>
+    <p class="text-muted-foreground">Responsive data table with header, body, footer and caption.</p>
+  </div>
+
+  <section class="space-y-3">
+    <h2 class="text-lg font-semibold">Installation</h2>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-bash">silkui add table</code></pre>
+    </div>
+  </section>
+
+  <!-- Example -->
+  <section class="space-y-4">
+    <h2 class="text-lg font-semibold">Example</h2>
+    <div class="rounded-lg border p-6 bg-card">
+      {% table %}
+        {% table_caption %}A list of recent invoices.{% endtable_caption %}
+        {% table_header %}
+          {% table_row %}
+            {% table_head %}Invoice{% endtable_head %}
+            {% table_head %}Status{% endtable_head %}
+            {% table_head %}Method{% endtable_head %}
+            {% table_head class="text-right" %}Amount{% endtable_head %}
+          {% endtable_row %}
+        {% endtable_header %}
+        {% table_body %}
+          {% table_row %}
+            {% table_cell class="font-medium" %}INV-001{% endtable_cell %}
+            {% table_cell %}{% badge variant="secondary" %}Paid{% endbadge %}{% endtable_cell %}
+            {% table_cell %}Credit Card{% endtable_cell %}
+            {% table_cell class="text-right" %}$250.00{% endtable_cell %}
+          {% endtable_row %}
+          {% table_row %}
+            {% table_cell class="font-medium" %}INV-002{% endtable_cell %}
+            {% table_cell %}{% badge variant="outline" %}Pending{% endbadge %}{% endtable_cell %}
+            {% table_cell %}PayPal{% endtable_cell %}
+            {% table_cell class="text-right" %}$150.00{% endtable_cell %}
+          {% endtable_row %}
+          {% table_row %}
+            {% table_cell class="font-medium" %}INV-003{% endtable_cell %}
+            {% table_cell %}{% badge variant="destructive" %}Failed{% endbadge %}{% endtable_cell %}
+            {% table_cell %}Bank Transfer{% endtable_cell %}
+            {% table_cell class="text-right" %}$350.00{% endtable_cell %}
+          {% endtable_row %}
+          {% table_row %}
+            {% table_cell class="font-medium" %}INV-004{% endtable_cell %}
+            {% table_cell %}{% badge variant="secondary" %}Paid{% endbadge %}{% endtable_cell %}
+            {% table_cell %}Credit Card{% endtable_cell %}
+            {% table_cell class="text-right" %}$450.00{% endtable_cell %}
+          {% endtable_row %}
+        {% endtable_body %}
+        {% table_footer %}
+          {% table_row %}
+            {% table_cell %}Total{% endtable_cell %}
+            {% table_cell %}{% endtable_cell %}
+            {% table_cell %}{% endtable_cell %}
+            {% table_cell class="text-right font-bold" %}$1,200.00{% endtable_cell %}
+          {% endtable_row %}
+        {% endtable_footer %}
+      {% endtable %}
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% table %}
+  {% table_caption %}A list of recent invoices.{% endtable_caption %}
+  {% table_header %}
+    {% table_row %}
+      {% table_head %}Invoice{% endtable_head %}
+      {% table_head %}Status{% endtable_head %}
+      {% table_head %}Method{% endtable_head %}
+      {% table_head class="text-right" %}Amount{% endtable_head %}
+    {% endtable_row %}
+  {% endtable_header %}
+  {% table_body %}
+    {% for invoice in invoices %}
+    {% table_row %}
+      {% table_cell class="font-medium" %}{{ invoice.number }}{% endtable_cell %}
+      {% table_cell %}
+        {% if invoice.status == "paid" %}{% badge variant="secondary" %}Paid{% endbadge %}
+        {% elif invoice.status == "pending" %}{% badge variant="outline" %}Pending{% endbadge %}
+        {% else %}{% badge variant="destructive" %}Failed{% endbadge %}
+        {% endif %}
+      {% endtable_cell %}
+      {% table_cell %}{{ invoice.method }}{% endtable_cell %}
+      {% table_cell class="text-right" %}{{ invoice.amount }}{% endtable_cell %}
+    {% endtable_row %}
+    {% endfor %}
+  {% endtable_body %}
+  {% table_footer %}
+    {% table_row %}
+      {% table_cell %}Total{% endtable_cell %}
+      {% table_cell %}{% endtable_cell %}
+      {% table_cell %}{% endtable_cell %}
+      {% table_cell class="text-right font-bold" %}{{ total }}{% endtable_cell %}
+    {% endtable_row %}
+  {% endtable_footer %}
+{% endtable %}{% endverbatim %}</code></pre>
+    </div>
+  </section>
+
+  <!-- With actions -->
+  <section class="space-y-4">
+    <h2 class="text-lg font-semibold">With actions</h2>
+    <div class="rounded-lg border p-6 bg-card">
+      {% table %}
+        {% table_header %}
+          {% table_row %}
+            {% table_head %}Name{% endtable_head %}
+            {% table_head %}Role{% endtable_head %}
+            {% table_head %}Status{% endtable_head %}
+            {% table_head class="text-right" %}Actions{% endtable_head %}
+          {% endtable_row %}
+        {% endtable_header %}
+        {% table_body %}
+          {% table_row %}
+            {% table_cell class="font-medium" %}Alice Martin{% endtable_cell %}
+            {% table_cell %}{% badge variant="outline" %}Admin{% endbadge %}{% endtable_cell %}
+            {% table_cell %}{% badge variant="secondary" %}Active{% endbadge %}{% endtable_cell %}
+            {% table_cell class="text-right" %}
+              <div class="flex gap-1 justify-end">
+                {% button size="sm" variant="outline" %}Edit{% endbutton %}
+                {% button size="sm" variant="destructive" %}Delete{% endbutton %}
+              </div>
+            {% endtable_cell %}
+          {% endtable_row %}
+          {% table_row %}
+            {% table_cell class="font-medium" %}Bob Dupont{% endtable_cell %}
+            {% table_cell %}{% badge variant="outline" %}Editor{% endbadge %}{% endtable_cell %}
+            {% table_cell %}{% badge variant="secondary" %}Active{% endbadge %}{% endtable_cell %}
+            {% table_cell class="text-right" %}
+              <div class="flex gap-1 justify-end">
+                {% button size="sm" variant="outline" %}Edit{% endbutton %}
+                {% button size="sm" variant="destructive" %}Delete{% endbutton %}
+              </div>
+            {% endtable_cell %}
+          {% endtable_row %}
+          {% table_row %}
+            {% table_cell class="font-medium" %}Claire Chen{% endtable_cell %}
+            {% table_cell %}{% badge variant="outline" %}Viewer{% endbadge %}{% endtable_cell %}
+            {% table_cell %}{% badge variant="outline" %}Inactive{% endbadge %}{% endtable_cell %}
+            {% table_cell class="text-right" %}
+              <div class="flex gap-1 justify-end">
+                {% button size="sm" variant="outline" %}Edit{% endbutton %}
+                {% button size="sm" variant="destructive" %}Delete{% endbutton %}
+              </div>
+            {% endtable_cell %}
+          {% endtable_row %}
+        {% endtable_body %}
+      {% endtable %}
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% table %}
+  {% table_header %}
+    {% table_row %}
+      {% table_head %}Name{% endtable_head %}
+      {% table_head %}Role{% endtable_head %}
+      {% table_head %}Status{% endtable_head %}
+      {% table_head class="text-right" %}Actions{% endtable_head %}
+    {% endtable_row %}
+  {% endtable_header %}
+  {% table_body %}
+    {% for user in users %}
+    {% table_row %}
+      {% table_cell class="font-medium" %}{{ user.name }}{% endtable_cell %}
+      {% table_cell %}{% badge variant="outline" %}{{ user.role }}{% endbadge %}{% endtable_cell %}
+      {% table_cell %}
+        {% if user.is_active %}{% badge variant="secondary" %}Active{% endbadge %}
+        {% else %}{% badge variant="outline" %}Inactive{% endbadge %}{% endif %}
+      {% endtable_cell %}
+      {% table_cell class="text-right" %}
+        &lt;div class="flex gap-1 justify-end"&gt;
+          {% button size="sm" variant="outline" href="/users/{{ user.pk }}/edit/" %}Edit{% endbutton %}
+          {% button size="sm" variant="destructive" hx_delete="/users/{{ user.pk }}/" hx_confirm="Delete?" %}Delete{% endbutton %}
+        &lt;/div&gt;
+      {% endtable_cell %}
+    {% endtable_row %}
+    {% endfor %}
+  {% endtable_body %}
+{% endtable %}{% endverbatim %}</code></pre>
+    </div>
+  </section>
+
+  <!-- With pagination -->
+  <section class="space-y-4">
+    <h2 class="text-lg font-semibold">With pagination</h2>
+    <div class="rounded-lg border p-6 bg-card"
+         x-data="{
+           page: 1,
+           perPage: 5,
+           rows: [
+             { id: 'INV-001', name: 'Alice Martin',   date: '2024-01-03', status: 'Paid',    amount: '$250.00' },
+             { id: 'INV-002', name: 'Bob Dupont',     date: '2024-01-05', status: 'Pending', amount: '$150.00' },
+             { id: 'INV-003', name: 'Claire Chen',    date: '2024-01-07', status: 'Failed',  amount: '$350.00' },
+             { id: 'INV-004', name: 'David Park',     date: '2024-01-09', status: 'Paid',    amount: '$450.00' },
+             { id: 'INV-005', name: 'Emma Leroy',     date: '2024-01-11', status: 'Paid',    amount: '$180.00' },
+             { id: 'INV-006', name: 'François Blanc', date: '2024-01-13', status: 'Pending', amount: '$320.00' },
+             { id: 'INV-007', name: 'Grace Kim',      date: '2024-01-15', status: 'Paid',    amount: '$275.00' },
+             { id: 'INV-008', name: 'Hugo Torres',    date: '2024-01-17', status: 'Failed',  amount: '$90.00'  },
+             { id: 'INV-009', name: 'Iris Nakamura',  date: '2024-01-19', status: 'Paid',    amount: '$510.00' },
+             { id: 'INV-010', name: 'Jules Moreau',   date: '2024-01-21', status: 'Pending', amount: '$640.00' },
+             { id: 'INV-011', name: 'Kira Schmidt',   date: '2024-01-23', status: 'Paid',    amount: '$195.00' },
+             { id: 'INV-012', name: 'Liam Osei',      date: '2024-01-25', status: 'Paid',    amount: '$730.00' }
+           ],
+           get totalPages() { return Math.ceil(this.rows.length / this.perPage) },
+           get paginated() { return this.rows.slice((this.page - 1) * this.perPage, this.page * this.perPage) },
+           get from() { return (this.page - 1) * this.perPage + 1 },
+           get to() { return Math.min(this.page * this.perPage, this.rows.length) }
+         }">
+      {% table %}
+        {% table_header %}
+          {% table_row %}
+            {% table_head %}Invoice{% endtable_head %}
+            {% table_head %}Customer{% endtable_head %}
+            {% table_head %}Date{% endtable_head %}
+            {% table_head %}Status{% endtable_head %}
+            {% table_head class="text-right" %}Amount{% endtable_head %}
+          {% endtable_row %}
+        {% endtable_header %}
+        {% table_body %}
+          <template x-for="row in paginated" :key="row.id">
+            <tr class="border-b transition-colors hover:bg-muted/50">
+              <td class="p-4 align-middle font-medium" x-text="row.id"></td>
+              <td class="p-4 align-middle" x-text="row.name"></td>
+              <td class="p-4 align-middle text-muted-foreground" x-text="row.date"></td>
+              <td class="p-4 align-middle">
+                <span x-text="row.status"
+                      :class="{
+                        'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold': true,
+                        'bg-secondary text-secondary-foreground border-transparent': row.status === 'Paid',
+                        'border-current': row.status === 'Pending',
+                        'bg-destructive text-destructive-foreground border-transparent': row.status === 'Failed'
+                      }"></span>
+              </td>
+              <td class="p-4 align-middle text-right" x-text="row.amount"></td>
+            </tr>
+          </template>
+        {% endtable_body %}
+      {% endtable %}
+      <div class="flex items-center justify-between pt-4">
+        <p class="text-sm text-muted-foreground">
+          Showing <span x-text="from"></span>–<span x-text="to"></span> of <span x-text="rows.length"></span> rows
+        </p>
+        <div class="flex items-center gap-1">
+          <button @click="page--" :disabled="page === 1"
+                  class="inline-flex items-center justify-center rounded-md border px-3 h-9 text-sm hover:bg-accent disabled:opacity-50 disabled:pointer-events-none">
+            Previous
+          </button>
+          <template x-for="p in totalPages" :key="p">
+            <button @click="page = p"
+                    :class="page === p ? 'bg-primary text-primary-foreground' : 'hover:bg-accent'"
+                    class="inline-flex items-center justify-center rounded-md border w-9 h-9 text-sm font-medium"
+                    x-text="p"></button>
+          </template>
+          <button @click="page++" :disabled="page === totalPages"
+                  class="inline-flex items-center justify-center rounded-md border px-3 h-9 text-sm hover:bg-accent disabled:opacity-50 disabled:pointer-events-none">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+&lt;div x-data="{
+  page: 1, perPage: 5,
+  rows: [...],
+  get totalPages() { return Math.ceil(this.rows.length / this.perPage) },
+  get paginated() { return this.rows.slice((this.page-1)*this.perPage, this.page*this.perPage) },
+  get from() { return (this.page-1)*this.perPage + 1 },
+  get to() { return Math.min(this.page*this.perPage, this.rows.length) }
+}"&gt;
+  {% table %}
+    {% table_header %}
+      {% table_row %}
+        {% table_head %}Invoice{% endtable_head %}
+        {% table_head %}Customer{% endtable_head %}
+        {% table_head class="text-right" %}Amount{% endtable_head %}
+      {% endtable_row %}
+    {% endtable_header %}
+    {% table_body %}
+      &lt;template x-for="row in paginated" :key="row.id"&gt;
+        &lt;tr class="border-b transition-colors hover:bg-muted/50"&gt;
+          &lt;td class="p-4 font-medium" x-text="row.id"&gt;&lt;/td&gt;
+          &lt;td class="p-4" x-text="row.name"&gt;&lt;/td&gt;
+          &lt;td class="p-4 text-right" x-text="row.amount"&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/template&gt;
+    {% endtable_body %}
+  {% endtable %}
+
+  &lt;div class="flex items-center justify-between pt-4"&gt;
+    &lt;p class="text-sm text-muted-foreground"&gt;
+      Showing &lt;span x-text="from"&gt;&lt;/span&gt;–&lt;span x-text="to"&gt;&lt;/span&gt; of &lt;span x-text="rows.length"&gt;&lt;/span&gt;
+    &lt;/p&gt;
+    &lt;div class="flex gap-1"&gt;
+      &lt;button @click="page--" :disabled="page === 1" class="..."&gt;Previous&lt;/button&gt;
+      &lt;template x-for="p in totalPages" :key="p"&gt;
+        &lt;button @click="page = p" :class="page===p ? 'bg-primary text-primary-foreground':'hover:bg-accent'" class="..."&gt;
+          &lt;span x-text="p"&gt;&lt;/span&gt;
+        &lt;/button&gt;
+      &lt;/template&gt;
+      &lt;button @click="page++" :disabled="page === totalPages" class="..."&gt;Next&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;{% endverbatim %}</code></pre>
+    </div>
+  </section>
+
+  <!-- Sortable -->
+  <section class="space-y-4">
+    <h2 class="text-lg font-semibold">Sortable columns</h2>
+    <div class="rounded-lg border p-6 bg-card"
+         x-data="{
+           sortKey: 'name',
+           sortDir: 'asc',
+           rows: [
+             { name: 'Alice Martin',   role: 'Admin',  score: 94, joined: '2022-03' },
+             { name: 'Bob Dupont',     role: 'Editor', score: 78, joined: '2023-01' },
+             { name: 'Claire Chen',    role: 'Viewer', score: 61, joined: '2023-08' },
+             { name: 'David Park',     role: 'Editor', score: 88, joined: '2021-11' },
+             { name: 'Emma Leroy',     role: 'Admin',  score: 97, joined: '2022-06' },
+             { name: 'François Blanc', role: 'Viewer', score: 45, joined: '2024-01' }
+           ],
+           sort(key) {
+             if (this.sortKey === key) { this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc' }
+             else { this.sortKey = key; this.sortDir = 'asc' }
+           },
+           get sorted() {
+             return [...this.rows].sort((a, b) => {
+               let av = a[this.sortKey], bv = b[this.sortKey]
+               if (typeof av === 'number') return this.sortDir === 'asc' ? av - bv : bv - av
+               return this.sortDir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av)
+             })
+           }
+         }">
+      {% table %}
+        {% table_header %}
+          {% table_row %}
+            <th @click="sort('name')" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground cursor-pointer select-none hover:text-foreground">
+              <span class="flex items-center gap-1">Name
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" :class="sortKey==='name' ? 'opacity-100' : 'opacity-30'"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+              </span>
+            </th>
+            <th @click="sort('role')" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground cursor-pointer select-none hover:text-foreground">
+              <span class="flex items-center gap-1">Role
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" :class="sortKey==='role' ? 'opacity-100' : 'opacity-30'"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+              </span>
+            </th>
+            <th @click="sort('score')" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground cursor-pointer select-none hover:text-foreground">
+              <span class="flex items-center gap-1">Score
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" :class="sortKey==='score' ? 'opacity-100' : 'opacity-30'"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+              </span>
+            </th>
+            <th @click="sort('joined')" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground cursor-pointer select-none hover:text-foreground">
+              <span class="flex items-center gap-1">Joined
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" :class="sortKey==='joined' ? 'opacity-100' : 'opacity-30'"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+              </span>
+            </th>
+          {% endtable_row %}
+        {% endtable_header %}
+        {% table_body %}
+          <template x-for="row in sorted" :key="row.name">
+            <tr class="border-b transition-colors hover:bg-muted/50">
+              <td class="p-4 align-middle font-medium" x-text="row.name"></td>
+              <td class="p-4 align-middle">
+                <span x-text="row.role" class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold"></span>
+              </td>
+              <td class="p-4 align-middle">
+                <div class="flex items-center gap-2">
+                  <div class="w-24 h-2 rounded-full bg-muted overflow-hidden">
+                    <div class="h-full rounded-full bg-primary" :style="`width:${row.score}%`"></div>
+                  </div>
+                  <span class="text-sm" x-text="row.score + '%'"></span>
+                </div>
+              </td>
+              <td class="p-4 align-middle text-muted-foreground" x-text="row.joined"></td>
+            </tr>
+          </template>
+        {% endtable_body %}
+      {% endtable %}
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+&lt;div x-data="{
+  sortKey: 'name', sortDir: 'asc',
+  rows: [...],
+  sort(key) {
+    if (this.sortKey === key) { this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc' }
+    else { this.sortKey = key; this.sortDir = 'asc' }
+  },
+  get sorted() {
+    return [...this.rows].sort((a, b) => {
+      let av = a[this.sortKey], bv = b[this.sortKey]
+      if (typeof av === 'number') return this.sortDir === 'asc' ? av - bv : bv - av
+      return this.sortDir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av)
+    })
+  }
+}"&gt;
+  {% table %}
+    {% table_header %}
+      {% table_row %}
+        &lt;th @click="sort('name')" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground cursor-pointer hover:text-foreground"&gt;
+          Name
+        &lt;/th&gt;
+        &lt;th @click="sort('score')" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground cursor-pointer hover:text-foreground"&gt;
+          Score
+        &lt;/th&gt;
+      {% endtable_row %}
+    {% endtable_header %}
+    {% table_body %}
+      &lt;template x-for="row in sorted" :key="row.name"&gt;
+        &lt;tr class="border-b transition-colors hover:bg-muted/50"&gt;
+          &lt;td class="p-4 align-middle font-medium" x-text="row.name"&gt;&lt;/td&gt;
+          &lt;td class="p-4 align-middle" x-text="row.score"&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/template&gt;
+    {% endtable_body %}
+  {% endtable %}
+&lt;/div&gt;{% endverbatim %}</code></pre>
+    </div>
+  </section>
+
+  <!-- Sales summary -->
+  <section class="space-y-4">
+    <h2 class="text-lg font-semibold">Sales summary</h2>
+    <div class="rounded-lg border bg-card overflow-hidden">
+      {% table %}
+        {% table_caption %}Revenue breakdown for Q1 2024.{% endtable_caption %}
+        {% table_header %}
+          {% table_row %}
+            {% table_head %}Channel{% endtable_head %}
+            {% table_head %}Orders{% endtable_head %}
+            {% table_head %}Avg. order{% endtable_head %}
+            {% table_head %}Refunds{% endtable_head %}
+            {% table_head class="text-right" %}Revenue{% endtable_head %}
+          {% endtable_row %}
+        {% endtable_header %}
+        {% table_body %}
+          {% table_row %}
+            {% table_cell %}
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-blue-500 shrink-0"></span>
+                <span class="font-medium">Direct</span>
+              </div>
+            {% endtable_cell %}
+            {% table_cell %}1 204{% endtable_cell %}
+            {% table_cell %}$87.40{% endtable_cell %}
+            {% table_cell %}<span class="text-destructive">−$1 240</span>{% endtable_cell %}
+            {% table_cell class="text-right font-medium" %}$103 990{% endtable_cell %}
+          {% endtable_row %}
+          {% table_row %}
+            {% table_cell %}
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-violet-500 shrink-0"></span>
+                <span class="font-medium">Organic search</span>
+              </div>
+            {% endtable_cell %}
+            {% table_cell %}876{% endtable_cell %}
+            {% table_cell %}$112.60{% endtable_cell %}
+            {% table_cell %}<span class="text-destructive">−$640</span>{% endtable_cell %}
+            {% table_cell class="text-right font-medium" %}$98 240{% endtable_cell %}
+          {% endtable_row %}
+          {% table_row %}
+            {% table_cell %}
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-amber-500 shrink-0"></span>
+                <span class="font-medium">Paid ads</span>
+              </div>
+            {% endtable_cell %}
+            {% table_cell %}643{% endtable_cell %}
+            {% table_cell %}$74.10{% endtable_cell %}
+            {% table_cell %}<span class="text-destructive">−$420</span>{% endtable_cell %}
+            {% table_cell class="text-right font-medium" %}$47 240{% endtable_cell %}
+          {% endtable_row %}
+          {% table_row %}
+            {% table_cell %}
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                <span class="font-medium">Referral</span>
+              </div>
+            {% endtable_cell %}
+            {% table_cell %}389{% endtable_cell %}
+            {% table_cell %}$95.30{% endtable_cell %}
+            {% table_cell %}<span class="text-destructive">−$190</span>{% endtable_cell %}
+            {% table_cell class="text-right font-medium" %}$36 910{% endtable_cell %}
+          {% endtable_row %}
+          {% table_row %}
+            {% table_cell %}
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-rose-500 shrink-0"></span>
+                <span class="font-medium">Email</span>
+              </div>
+            {% endtable_cell %}
+            {% table_cell %}214{% endtable_cell %}
+            {% table_cell %}$68.50{% endtable_cell %}
+            {% table_cell %}<span class="text-destructive">−$80</span>{% endtable_cell %}
+            {% table_cell class="text-right font-medium" %}$14 620{% endtable_cell %}
+          {% endtable_row %}
+        {% endtable_body %}
+        {% table_footer %}
+          {% table_row %}
+            {% table_cell class="font-semibold" %}Total{% endtable_cell %}
+            {% table_cell class="font-semibold" %}3 326{% endtable_cell %}
+            {% table_cell class="text-muted-foreground" %}$87.50 avg{% endtable_cell %}
+            {% table_cell class="font-semibold text-destructive" %}−$2 570{% endtable_cell %}
+            {% table_cell class="text-right font-bold text-lg" %}$301 000{% endtable_cell %}
+          {% endtable_row %}
+        {% endtable_footer %}
+      {% endtable %}
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% table %}
+  {% table_caption %}Revenue breakdown for Q1 2024.{% endtable_caption %}
+  {% table_header %}
+    {% table_row %}
+      {% table_head %}Channel{% endtable_head %}
+      {% table_head %}Orders{% endtable_head %}
+      {% table_head %}Avg. order{% endtable_head %}
+      {% table_head %}Refunds{% endtable_head %}
+      {% table_head class="text-right" %}Revenue{% endtable_head %}
+    {% endtable_row %}
+  {% endtable_header %}
+  {% table_body %}
+    {% for row in sales %}
+    {% table_row %}
+      {% table_cell %}
+        &lt;div class="flex items-center gap-2"&gt;
+          &lt;span class="w-2 h-2 rounded-full shrink-0" style="background:{{ row.color }}"&gt;&lt;/span&gt;
+          &lt;span class="font-medium"&gt;{{ row.channel }}&lt;/span&gt;
+        &lt;/div&gt;
+      {% endtable_cell %}
+      {% table_cell %}{{ row.orders }}{% endtable_cell %}
+      {% table_cell %}{{ row.avg_order }}{% endtable_cell %}
+      {% table_cell %}&lt;span class="text-destructive"&gt;{{ row.refunds }}&lt;/span&gt;{% endtable_cell %}
+      {% table_cell class="text-right font-medium" %}{{ row.revenue }}{% endtable_cell %}
+    {% endtable_row %}
+    {% endfor %}
+  {% endtable_body %}
+  {% table_footer %}
+    {% table_row %}
+      {% table_cell class="font-semibold" %}Total{% endtable_cell %}
+      {% table_cell class="font-semibold" %}{{ total_orders }}{% endtable_cell %}
+      {% table_cell class="text-muted-foreground" %}{{ avg_order }} avg{% endtable_cell %}
+      {% table_cell class="font-semibold text-destructive" %}{{ total_refunds }}{% endtable_cell %}
+      {% table_cell class="text-right font-bold text-lg" %}{{ total_revenue }}{% endtable_cell %}
+    {% endtable_row %}
+  {% endtable_footer %}
+{% endtable %}{% endverbatim %}</code></pre>
+    </div>
+  </section>
+
+  <!-- Subcomponents -->
+  <section class="space-y-4">
+    <h2 class="text-lg font-semibold">Subcomponents</h2>
+    <div class="rounded-lg border overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="border-b bg-muted/50">
+          <tr>
+            <th class="text-left px-4 py-3 font-medium">Tag</th>
+            <th class="text-left px-4 py-3 font-medium">Renders</th>
+            <th class="text-left px-4 py-3 font-medium">Props</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y">
+          <tr><td class="px-4 py-3 font-mono text-xs">table</td><td class="px-4 py-3 text-muted-foreground">Scrollable wrapper + &lt;table&gt;</td><td class="px-4 py-3 font-mono text-xs">class</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">table_header</td><td class="px-4 py-3 text-muted-foreground">&lt;thead&gt;</td><td class="px-4 py-3 font-mono text-xs">class</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">table_body</td><td class="px-4 py-3 text-muted-foreground">&lt;tbody&gt;</td><td class="px-4 py-3 font-mono text-xs">class</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">table_footer</td><td class="px-4 py-3 text-muted-foreground">&lt;tfoot&gt; — gray background</td><td class="px-4 py-3 font-mono text-xs">class</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">table_row</td><td class="px-4 py-3 text-muted-foreground">&lt;tr&gt; — border-b + hover</td><td class="px-4 py-3 font-mono text-xs">class</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">table_head</td><td class="px-4 py-3 text-muted-foreground">&lt;th&gt; — h-12, muted text</td><td class="px-4 py-3 font-mono text-xs">class</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">table_cell</td><td class="px-4 py-3 text-muted-foreground">&lt;td&gt; — p-4</td><td class="px-4 py-3 font-mono text-xs">class</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">table_caption</td><td class="px-4 py-3 text-muted-foreground">&lt;caption&gt; — muted text below</td><td class="px-4 py-3 font-mono text-xs">class</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-sm text-muted-foreground">Every subcomponent accepts a <code class="bg-muted px-1 rounded">class</code> prop for alignment, padding, or color overrides.</p>
+  </section>
+
+  <div class="flex justify-between pt-4 border-t text-sm">
+    <a href="/docs/separator/" class="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> Separator
+    </a>
+    <a href="/docs/tabs/" class="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+      Tabs <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  </div>
+
+</div>
+{% endblock %}

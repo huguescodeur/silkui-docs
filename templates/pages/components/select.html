@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load silkui_tags %}
+
+{% block title %}Select — SilkUI{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-8 py-12 space-y-12">
+
+  <div class="space-y-2">
+    <p class="text-sm text-muted-foreground">Form</p>
+    <h1 class="text-3xl font-bold tracking-tight">Select</h1>
+    <p class="text-muted-foreground">Dropdown selection from a list of choices.</p>
+  </div>
+
+  <section class="space-y-3">
+    <h2 class="text-lg font-semibold">Installation</h2>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText('silkui add select'); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-bash">silkui add select</code></pre>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-lg font-semibold">Examples</h2>
+    <div class="rounded-lg border p-6 bg-card">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+        {% select name="role" label="Role" choices=role_choices placeholder="Select a role..." %}
+        {% select name="role2" label="Role (pre-selected)" choices=role_choices value="editor" %}
+      </div>
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% select name="role" label="Role" choices=role_choices placeholder="Select a role..." %}
+{% select name="role" label="Role" choices=role_choices value="editor" %}{% endverbatim %}</code></pre>
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-python"># views.py
+ROLE_CHOICES = [
+    ("admin", "Admin"),
+    ("editor", "Editor"),
+    ("viewer", "Viewer"),
+]
+
+def my_view(request):
+    return render(request, "template.html", {"role_choices": ROLE_CHOICES})</code></pre>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-lg font-semibold">Props</h2>
+    <div class="rounded-lg border overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="border-b bg-muted/50">
+          <tr>
+            <th class="text-left px-4 py-3 font-medium">Prop</th>
+            <th class="text-left px-4 py-3 font-medium">Type</th>
+            <th class="text-left px-4 py-3 font-medium">Description</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y">
+          <tr><td class="px-4 py-3 font-mono text-xs">name</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3 text-muted-foreground">Required. HTML name attribute</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">choices</td><td class="px-4 py-3 text-muted-foreground">list</td><td class="px-4 py-3 text-muted-foreground">Required. List of (value, label) tuples</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">label</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3 text-muted-foreground">Label above the field</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">value</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3 text-muted-foreground">Pre-selected value</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">placeholder</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3 text-muted-foreground">Empty option label</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">hint</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3 text-muted-foreground">Help text</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">required</td><td class="px-4 py-3 text-muted-foreground">bool</td><td class="px-4 py-3 text-muted-foreground">Marks as required</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">disabled</td><td class="px-4 py-3 text-muted-foreground">bool</td><td class="px-4 py-3 text-muted-foreground">Disables the select</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="flex justify-between pt-4 border-t text-sm">
+    <a href="/docs/textarea/" class="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> Textarea
+    </a>
+    <a href="/docs/checkbox/" class="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+      Checkbox <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load silkui_tags %}
+
+{% block title %}Input — SilkUI{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-8 py-12 space-y-12">
+
+  <div class="space-y-2">
+    <p class="text-sm text-muted-foreground">Form</p>
+    <h1 class="text-3xl font-bold tracking-tight">Input</h1>
+    <p class="text-muted-foreground">Text input field with label, hint, icon, and validation support.</p>
+  </div>
+
+  <section class="space-y-3">
+    <h2 class="text-lg font-semibold">Installation</h2>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText('silkui add input'); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-bash">silkui add input</code></pre>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-lg font-semibold">Examples</h2>
+    <div class="rounded-lg border p-6 bg-card">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+        {% input name="email" label="Email" type="email" placeholder="you@example.com" required=True %}
+        {% input name="password" label="Password" type="password" placeholder="••••••••" %}
+        {% input name="search" label="Search" placeholder="Search..." icon="🔍" icon_position="left" %}
+        {% input name="bio" label="Bio" hint="Max 160 characters." %}
+      </div>
+    </div>
+    <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+      <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+        <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+
+{% input name="email" label="Email" type="email" placeholder="you@example.com" required=True %}
+{% input name="password" label="Password" type="password" %}
+{% input name="search" label="Search" icon="🔍" icon_position="left" %}
+{% input name="bio" label="Bio" hint="Max 160 characters." %}{% endverbatim %}</code></pre>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-lg font-semibold">Props</h2>
+    <div class="rounded-lg border overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="border-b bg-muted/50">
+          <tr>
+            <th class="text-left px-4 py-3 font-medium">Prop</th>
+            <th class="text-left px-4 py-3 font-medium">Type</th>
+            <th class="text-left px-4 py-3 font-medium">Default</th>
+            <th class="text-left px-4 py-3 font-medium">Description</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y">
+          <tr><td class="px-4 py-3 font-mono text-xs">name</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3">—</td><td class="px-4 py-3 text-muted-foreground">Required. HTML name attribute</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">label</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3">—</td><td class="px-4 py-3 text-muted-foreground">Label above the field</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">type</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3 font-mono text-xs">text</td><td class="px-4 py-3 text-muted-foreground">text · email · password · number · etc.</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">placeholder</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3">—</td><td class="px-4 py-3 text-muted-foreground">Placeholder text</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">value</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3">—</td><td class="px-4 py-3 text-muted-foreground">Initial value</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">hint</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3">—</td><td class="px-4 py-3 text-muted-foreground">Help text below the field</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">error</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3">—</td><td class="px-4 py-3 text-muted-foreground">Error message (red border)</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">required</td><td class="px-4 py-3 text-muted-foreground">bool</td><td class="px-4 py-3 font-mono text-xs">False</td><td class="px-4 py-3 text-muted-foreground">Marks field as required</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">disabled</td><td class="px-4 py-3 text-muted-foreground">bool</td><td class="px-4 py-3 font-mono text-xs">False</td><td class="px-4 py-3 text-muted-foreground">Disables the input</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">icon</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3">—</td><td class="px-4 py-3 text-muted-foreground">Emoji or SVG icon</td></tr>
+          <tr><td class="px-4 py-3 font-mono text-xs">icon_position</td><td class="px-4 py-3 text-muted-foreground">string</td><td class="px-4 py-3 font-mono text-xs">left</td><td class="px-4 py-3 text-muted-foreground">left · right</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="flex justify-between pt-4 border-t text-sm">
+    <a href="/docs/toast/" class="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> Toast
+    </a>
+    <a href="/docs/textarea/" class="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+      Textarea <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  </div>
+
+</div>
+{% endblock %}

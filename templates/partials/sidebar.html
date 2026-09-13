@@ -1,0 +1,49 @@
+{% load silkui_tags %}
+{% regroup components by category as grouped %}
+<nav class="space-y-5 text-sm">
+
+  <!-- Getting started -->
+  <div class="space-y-0.5">
+    <a href="/" class="block px-3 py-1.5 rounded-md {% if request.path == '/' %}bg-accent font-medium{% else %}text-muted-foreground hover:text-foreground hover:bg-accent/50{% endif %} transition-colors">
+      Introduction
+    </a>
+    <a href="/docs/getting-started/" class="block px-3 py-1.5 rounded-md {% if request.path == '/docs/getting-started/' %}bg-accent font-medium{% else %}text-muted-foreground hover:text-foreground hover:bg-accent/50{% endif %} transition-colors">
+      Getting Started
+    </a>
+  </div>
+
+  <!-- Components by category -->
+  {% for group in grouped %}
+  <div>
+    <p class="px-3 mb-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{{ group.grouper }}</p>
+    <ul class="space-y-0.5">
+      {% for c in group.list %}
+      <li>
+        <a href="/docs/{{ c.slug }}/"
+           class="block px-3 py-1.5 rounded-md transition-colors {% if current.slug == c.slug %}bg-accent font-medium text-foreground{% else %}text-muted-foreground hover:text-foreground hover:bg-accent/50{% endif %}">
+          {{ c.label }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+
+  <!-- Examples -->
+  <div>
+    <p class="px-3 mb-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Examples</p>
+    <ul class="space-y-0.5">
+      <li>
+        <a href="/docs/blocks/" class="block px-3 py-1.5 rounded-md transition-colors {% if request.path == '/docs/blocks/' %}bg-accent font-medium text-foreground{% else %}text-muted-foreground hover:text-foreground hover:bg-accent/50{% endif %}">
+          Blocks
+        </a>
+      </li>
+      <li>
+        <a href="/docs/htmx/" class="block px-3 py-1.5 rounded-md transition-colors {% if request.path == '/docs/htmx/' %}bg-accent font-medium text-foreground{% else %}text-muted-foreground hover:text-foreground hover:bg-accent/50{% endif %}">
+          HTMX Integration
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</nav>

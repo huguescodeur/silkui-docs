@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}SilkUI — Django UI Components{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-8 py-16 space-y-10">
+
+  <div class="space-y-4">
+    <div class="inline-flex items-center rounded-full border px-3 py-1 text-xs text-muted-foreground">
+      v1.0.0 · MIT License
+    </div>
+    <h1 class="text-4xl font-bold tracking-tight">SilkUI</h1>
+    <p class="text-xl text-muted-foreground leading-relaxed">
+      UI components for Django. Copy, own, customize. Inspired by shadcn/ui.
+    </p>
+    <div class="flex flex-wrap gap-3 pt-2">
+      <a href="/docs/button/" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 transition-colors">
+        Browse components
+      </a>
+      <a href="https://github.com/huguescodeur/silkui" target="_blank" class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-6 transition-colors">
+        GitHub
+      </a>
+    </div>
+  </div>
+
+  <hr class="border-border" />
+
+  <div class="space-y-6">
+    <h2 class="text-2xl font-semibold tracking-tight">Installation</h2>
+    <div class="space-y-4">
+
+      <p class="text-sm text-muted-foreground">1. Install SilkUI:</p>
+      <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+        <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10 rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+          <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+        </button>
+        <pre class="overflow-x-auto p-4 text-sm"><code class="language-bash">pip install silkui</code></pre>
+      </div>
+
+      <p class="text-sm text-muted-foreground">2. Add to <code class="text-xs bg-muted px-1 py-0.5 rounded">INSTALLED_APPS</code>:</p>
+      <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+        <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10 rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+          <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+        </button>
+        <pre class="overflow-x-auto p-4 text-sm"><code class="language-python">INSTALLED_APPS = [
+    ...
+    "silkui",
+]</code></pre>
+      </div>
+
+      <p class="text-sm text-muted-foreground">3. Load and use in your templates:</p>
+      <div class="relative group rounded-lg border bg-muted/30 overflow-hidden">
+        <button x-data="{ copied: false }" @click="navigator.clipboard.writeText($el.closest('.relative').querySelector('code').innerText); copied = true; setTimeout(() => copied = false, 2000)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10 rounded-md px-2 py-1 text-xs bg-background border hover:bg-accent">
+          <span x-show="!copied">Copy</span><span x-show="copied" x-cloak>Copied!</span>
+        </button>
+        <pre class="overflow-x-auto p-4 text-sm"><code class="language-django">{% verbatim %}{% load silkui_tags %}
+{% button %}Click me{% endbutton %}{% endverbatim %}</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <hr class="border-border" />
+
+  <div class="space-y-6">
+    <h2 class="text-2xl font-semibold tracking-tight">Components</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      {% for c in components %}
+      <a href="/docs/{{ c.slug }}/" class="group rounded-lg border p-4 hover:border-foreground/30 hover:bg-accent/30 transition-all">
+        <p class="text-sm font-medium group-hover:text-foreground">{{ c.label }}</p>
+        <p class="text-xs text-muted-foreground mt-0.5">{{ c.category }}</p>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}
